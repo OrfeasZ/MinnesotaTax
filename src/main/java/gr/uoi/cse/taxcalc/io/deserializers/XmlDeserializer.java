@@ -60,7 +60,7 @@ public class XmlDeserializer implements Deserializer {
     private Receipt parseReceipt(Element elem) {
         return new Receipt(
                 ReceiptKind.getEnum(elem.getElementsByTagName("Kind").item(0).getNodeValue()),
-                elem.getElementsByTagName("ID").item(0).getNodeValue(),
+                elem.getAttributeNode("id").getNodeValue(),
                 elem.getElementsByTagName("Date").item(0).getNodeValue(),
                 Double.parseDouble(elem.getElementsByTagName("Amount").item(0).getNodeValue()),
                 elem.getElementsByTagName("Name").item(0).getNodeValue(),
