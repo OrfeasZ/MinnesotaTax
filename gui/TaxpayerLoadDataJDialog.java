@@ -35,7 +35,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 		setBounds(100, 100, 486, 332);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		setTitle("Αρχεία φόρτωσης δεδομένων");
+		setTitle("Ξ‘ΟΟ‡ΞµΞ―Ξ± Ο†ΟΟΟ„Ο‰ΟƒΞ·Ο‚ Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½");
 		
 		JScrollPane scrollPaneForList = new JScrollPane();
 		scrollPaneForList.setBounds(10, 11, 250, 258);
@@ -50,15 +50,15 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 		JButton loadDataFromSelectedAfmInfoFilesButton = new JButton();
 		loadDataFromSelectedAfmInfoFilesButton.setBounds(270, 11, 198, 68);
 		String text = "<html>"
-				+ "Φόρτωση δεδομένων"
+				+ "Ξ¦ΟΟΟ„Ο‰ΟƒΞ· Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½"
 				+ "<br>"
-				+ "επιλεγμένων αρχείων"
+				+ "ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ο‰Ξ½ Ξ±ΟΟ‡ΞµΞ―Ο‰Ξ½"
 				+ "</html>";
 		loadDataFromSelectedAfmInfoFilesButton.setText(text);
 		loadDataFromSelectedAfmInfoFilesButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		getContentPane().add(loadDataFromSelectedAfmInfoFilesButton);
 		
-		JButton selectAllButton = new JButton("Επιλογή όλων");
+		JButton selectAllButton = new JButton("Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® ΟΞ»Ο‰Ξ½");
 		selectAllButton.setBounds(10, 274, 250, 23);
 		selectAllButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		getContentPane().add(selectAllButton);
@@ -74,13 +74,13 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 				List<String> afmInfoFilesListToLoad = (List<String>) taxpayersAfmInfoFilesJList.getSelectedValuesList();
 				
 				if (afmInfoFilesListToLoad.size() > 0){
-					String confirmDialogText = "Φόρτωση δεδομένων φορολογούμενων απο τα ακόλουθα αρχεία:\n";
+					String confirmDialogText = "Ξ¦ΟΟΟ„Ο‰ΟƒΞ· Ξ΄ΞµΞ΄ΞΏΞΌΞ­Ξ½Ο‰Ξ½ Ο†ΞΏΟΞΏΞ»ΞΏΞ³ΞΏΟΞΌΞµΞ½Ο‰Ξ½ Ξ±Ο€ΞΏ Ο„Ξ± Ξ±ΞΊΟΞ»ΞΏΟ…ΞΈΞ± Ξ±ΟΟ‡ΞµΞ―Ξ±:\n";
 					for (String afmInfoFileName : afmInfoFilesListToLoad){
 						confirmDialogText += afmInfoFileName + "\n";
 					}
-					confirmDialogText += "Είστε σίγουρος?";
+					confirmDialogText += "Ξ•Ξ―ΟƒΟ„Ξµ ΟƒΞ―Ξ³ΞΏΟ…ΟΞΏΟ‚?";
 					
-					int dialogResult = JOptionPane.showConfirmDialog (null, confirmDialogText, "Επιβεβαίωση", JOptionPane.YES_NO_OPTION);
+					int dialogResult = JOptionPane.showConfirmDialog (null, confirmDialogText, "Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ·", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
 						Database.proccessTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
@@ -90,7 +90,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 					}
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει αρχείο(α) απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ξ”ΞµΞ½ Ξ­Ο‡ΞµΞΉΟ‚ ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΞΉ Ξ±ΟΟ‡ΞµΞ―ΞΏ(Ξ±) Ξ±Ο€ΞΏ Ο„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ±.", "Ξ£Ο†Ξ¬Ξ»ΞΌΞ±", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

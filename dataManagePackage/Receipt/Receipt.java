@@ -16,7 +16,7 @@ public abstract class Receipt {
 		this.company = new Company(name, country, city, street, number);
 	}
 	
-	public String getId() {
+	public String getId(){
 		return id;
 	}
 	

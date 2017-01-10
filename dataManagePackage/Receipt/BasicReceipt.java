@@ -1,5 +1,3 @@
-
-
 package dataManagePackage.Receipt;
 
 public class BasicReceipt extends Receipt{

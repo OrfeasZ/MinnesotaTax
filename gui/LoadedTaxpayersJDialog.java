@@ -36,7 +36,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		setType(Type.POPUP);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setTitle("��������������");
+		setTitle("Φορολογούμενοι");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 280, 400);
@@ -52,9 +52,9 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		JButton showSelectedTaxpayerInfoButton = new JButton();
 		showSelectedTaxpayerInfoButton.setHorizontalAlignment(SwingConstants.LEFT);
 		String buttonText = "<html>"
-				+ "�������� ���������"
+				+ "Εμφάνιση στοιχείων"
 				+ "<br>"
-				+ "����������� ��������������"
+				+ "επιλεγμένου φορολογούμενου"
 				+ "</html>";
 		showSelectedTaxpayerInfoButton.setText(buttonText);
 		showSelectedTaxpayerInfoButton.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -64,9 +64,9 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		JButton deleteSelectedTaxpayerFromDatabaseButton = new JButton();
 		deleteSelectedTaxpayerFromDatabaseButton.setHorizontalAlignment(SwingConstants.LEFT);
 		buttonText = "<html>"
-				+ "�������� �����������"
+				+ "Διαγραφή επιλεγμένου"
 				+ "<br>"
-				+ "��������������"
+				+ "φορολογούμενου"
 				+ "</html>";
 		deleteSelectedTaxpayerFromDatabaseButton.setText(buttonText);
 		deleteSelectedTaxpayerFromDatabaseButton.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -75,32 +75,32 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		
 		JButton showSelectedTaxpayerReceiptsButton = new JButton();
 		buttonText = "<html>"
-				+ "�������� ����������"
+				+ "Εμφάνιση αποδείξεων"
 				+ "<br>"
-				+ "����������� ��������������"
+				+ "επιλεγμένου φορολογούμενου"
 				+ "</html>";
 		showSelectedTaxpayerReceiptsButton.setText(buttonText);
 		showSelectedTaxpayerReceiptsButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		showSelectedTaxpayerReceiptsButton.setBounds(300, 175, 240, 71);
 		getContentPane().add(showSelectedTaxpayerReceiptsButton);
 		
-		JButton showSelectedTaxpayerPieChartButton = new JButton("��������� ����� ����������");
+		JButton showSelectedTaxpayerPieChartButton = new JButton("Διάγραμμα πίτας αποδείξεων");
 		showSelectedTaxpayerPieChartButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		showSelectedTaxpayerPieChartButton.setBounds(300, 257, 240, 71);
 		getContentPane().add(showSelectedTaxpayerPieChartButton);
 		
-		JButton showSelectedTaxpayerBarChartButton = new JButton("����������� �������� �����");
+		JButton showSelectedTaxpayerBarChartButton = new JButton("Ραβδόγραμμα ανάλυσης φόρου");
 		showSelectedTaxpayerBarChartButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		showSelectedTaxpayerBarChartButton.setBounds(300, 340, 240, 71);
 		getContentPane().add(showSelectedTaxpayerBarChartButton);
 		
-		JButton saveSelectedTaxpayerInfoToTxtButton = new JButton("���������� ��������� �������������� �� txt");
+		JButton saveSelectedTaxpayerInfoToTxtButton = new JButton("Αποθήκευση στοιχείων φορολογούμενου σε txt");
 		saveSelectedTaxpayerInfoToTxtButton.setForeground(Color.RED);
 		saveSelectedTaxpayerInfoToTxtButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		saveSelectedTaxpayerInfoToTxtButton.setBounds(10, 422, 530, 29);
 		getContentPane().add(saveSelectedTaxpayerInfoToTxtButton);
 		
-		JButton saveSelectedTaxpayerInfoToXmlButton = new JButton("���������� ��������� �������������� �� xml");
+		JButton saveSelectedTaxpayerInfoToXmlButton = new JButton("Αποθήκευση στοιχείων φορολογούμενου σε xml");
 		saveSelectedTaxpayerInfoToXmlButton.setForeground(Color.RED);
 		saveSelectedTaxpayerInfoToXmlButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		saveSelectedTaxpayerInfoToXmlButton.setBounds(10, 455, 530, 29);
@@ -114,7 +114,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					JOptionPane.showMessageDialog(null, Database.getTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex()).toString(),  loadedTaxpayersJList.getSelectedValue().toString(), JOptionPane.PLAIN_MESSAGE);
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -122,11 +122,9 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		deleteSelectedTaxpayerFromDatabaseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (loadedTaxpayersJList.getSelectedIndex()!=-1){
-					int dialogResult = JOptionPane.showConfirmDialog (null, "�������� ����������� ��������������("+loadedTaxpayersJList.getSelectedValue().toString()+") ��� ��� ���� ���������?", "����������� ���������", JOptionPane.YES_NO_OPTION);
-
-						if(dialogResult == JOptionPane.YES_OPTION){
-
-								Database.removeTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex());
+					int dialogResult = JOptionPane.showConfirmDialog (null, "Διαγραφή επιλεγμένου φορολογούμενου("+loadedTaxpayersJList.getSelectedValue().toString()+") απο την βάση δεδομένων?", "Επιβεβαίωση διαγραφής", JOptionPane.YES_NO_OPTION);
+					if(dialogResult == JOptionPane.YES_OPTION){
+						Database.removeTaxpayerFromArrayList(loadedTaxpayersJList.getSelectedIndex());
 						
 						fillLoadedTaxpayersJList();
 						
@@ -137,7 +135,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					}
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -150,7 +148,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					taxpayerReceiptsManagementJDialog.setVisible(true);
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -162,7 +160,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					OutputSystem.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -174,7 +172,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					OutputSystem.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -185,7 +183,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 				if (taxpayerIndex!=-1){
 					JFileChooser saveFileFolderChooser = new JFileChooser();
 					saveFileFolderChooser.setCurrentDirectory(new java.io.File("."));
-					saveFileFolderChooser.setDialogTitle("�������� ������ ����������� "+Database.getTaxpayerFromArrayList(taxpayerIndex).getAFM()+"_LOG.txt");
+					saveFileFolderChooser.setDialogTitle("Επιλέξτε φάκελο αποθήκευσης "+Database.getTaxpayerFromArrayList(taxpayerIndex).getAFM()+"_LOG.txt");
 					saveFileFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -195,7 +193,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					}
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -206,7 +204,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 				if (taxpayerIndex!=-1){
 					JFileChooser saveFileFolderChooser = new JFileChooser();
 					saveFileFolderChooser.setCurrentDirectory(new java.io.File("."));
-					saveFileFolderChooser.setDialogTitle("�������� ������ ����������� "+Database.getTaxpayerFromArrayList(taxpayerIndex).getAFM()+"_LOG.xml");
+					saveFileFolderChooser.setDialogTitle("Επιλέξτε φάκελο αποθήκευσης "+Database.getTaxpayerFromArrayList(taxpayerIndex).getAFM()+"_LOG.xml");
 					saveFileFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -216,7 +214,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 					}
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "��� ����� �������� ������� ������������� ��� ��� �����.", "������", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

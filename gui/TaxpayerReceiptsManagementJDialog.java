@@ -44,14 +44,14 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		taxpayerReceiptsJList.setForeground(Color.BLUE);
 		taxpayerReceiptsJList.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
-		JLabel label = new JLabel("Αποδείξεις Φορολογούμενου");
+		JLabel label = new JLabel("Ξ‘Ο€ΞΏΞ΄ΞµΞ―ΞΎΞµΞΉΟ‚ Ξ¦ΞΏΟΞΏΞ»ΞΏΞ³ΞΏΟΞΌΞµΞ½ΞΏΟ…");
 		label.setForeground(Color.RED);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setFont(new Font("Tahoma", Font.BOLD, 14));
 		label.setBounds(10, 11, 250, 22);
 		getContentPane().add(label);		
 		
-		JButton insertNewReceiptButton = new JButton("Εισαγωγή νέας απόδειξης");
+		JButton insertNewReceiptButton = new JButton("Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ½Ξ­Ξ±Ο‚ Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ·Ο‚");
 		insertNewReceiptButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		insertNewReceiptButton.setBounds(270, 114, 194, 65);
 		getContentPane().add(insertNewReceiptButton);
@@ -59,9 +59,9 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		JButton deleteSelectedReceiptButton = new JButton();
 		deleteSelectedReceiptButton.setHorizontalAlignment(SwingConstants.LEFT);
 		String buttonText = "<html>"
-				+ "Διαγραφή επιλεγμένης"
+				+ "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚"
 				+ "<br>"
-				+ "απόδειξης"
+				+ "Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ·Ο‚"
 				+ "</html>";
 		deleteSelectedReceiptButton.setText(buttonText);
 		deleteSelectedReceiptButton.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -70,9 +70,9 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		
 		JButton showSelectedReceiptDetailsButton = new JButton();
 		buttonText = "<html>"
-				+ "Εμφάνιση πληροφοριών"
+				+ "Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ο€Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞΉΟΞ½"
 				+ "<br>"
-				+ "επιλεγμένης απόδειξης"
+				+ "ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ·Ο‚"
 				+ "</html>";
 		showSelectedReceiptDetailsButton.setText(buttonText);
 		showSelectedReceiptDetailsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -84,7 +84,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 				if (taxpayerReceiptsJList.getSelectedIndex()!=-1){
 					JOptionPane.showMessageDialog(null, Database.getTaxpayerFromArrayList(taxpayerID).getReceipt(taxpayerReceiptsJList.getSelectedIndex()).toString(), taxpayerReceiptsJList.getSelectedValue().toString(), JOptionPane.PLAIN_MESSAGE);
 				}else{
-					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποια απόδειξη απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ξ”ΞµΞ½ Ξ­Ο‡ΞµΞΉΟ‚ ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΞΉ ΞΊΞ¬Ο€ΞΏΞΉΞ± Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ· Ξ±Ο€ΞΏ Ο„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ±.", "Ξ£Ο†Ξ¬Ξ»ΞΌΞ±", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
@@ -101,7 +101,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		deleteSelectedReceiptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (taxpayerReceiptsJList.getSelectedIndex()!=-1){
-					int dialogResult = JOptionPane.showConfirmDialog (null, "Διαγραφή επιλεγμένης απόδειξης("+taxpayerReceiptsJList.getSelectedValue().toString()+") ?", "Επιβεβαίωση διαγραφής", JOptionPane.YES_NO_OPTION);
+					int dialogResult = JOptionPane.showConfirmDialog (null, "Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ·Ο‚("+taxpayerReceiptsJList.getSelectedValue().toString()+") ?", "Ξ•Ο€ΞΉΞ²ΞµΞ²Ξ±Ξ―Ο‰ΟƒΞ· Ξ΄ΞΉΞ±Ξ³ΟΞ±Ο†Ξ®Ο‚", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
 						Database.getTaxpayerFromArrayList(taxpayerID).removeReceiptFromList(taxpayerReceiptsJList.getSelectedIndex());
 						
@@ -110,7 +110,7 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 						fillTaxpayerReceiptsJList();
 					}
 				}else{
-					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποια απόδειξη απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ξ”ΞµΞ½ Ξ­Ο‡ΞµΞΉΟ‚ ΞµΟ€ΞΉΞ»Ξ­ΞΎΞµΞΉ ΞΊΞ¬Ο€ΞΏΞΉΞ± Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ· Ξ±Ο€ΞΏ Ο„Ξ·Ξ½ Ξ»Ξ―ΟƒΟ„Ξ±.", "Ξ£Ο†Ξ¬Ξ»ΞΌΞ±", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

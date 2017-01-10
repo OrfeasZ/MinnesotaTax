@@ -20,7 +20,6 @@ public class Taxpayer {
 		this.afm = afm;
 		this.familyStatus = familyStatus;
 		this.income = Double.parseDouble(income);
-
 		setBasicTaxBasedOnFamilyStatus();
 		taxIncrease = 0;
 		taxDecrease = 0;
@@ -218,9 +217,7 @@ public class Taxpayer {
 		double otherReceiptsTotalAmount = 0;
 		
 		for (Receipt receipt : receipts){
-
 			if (receipt.getKind().equals("Other")){
-
 				otherReceiptsTotalAmount += receipt.getAmount();
 			}
 		}

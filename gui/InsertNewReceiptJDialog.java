@@ -33,7 +33,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setType(Type.POPUP);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Εισαγωγή νέας απόδειξης");
+		setTitle("Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ½Ξ­Ξ±Ο‚ Ξ±Ο€ΟΞ΄ΞµΞΉΞΎΞ·Ο‚");
 		
 		JTextField receiptIdTextField = new JTextField();
 		receiptIdTextField.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -195,7 +195,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 					
 					dispose();
 				}else{
-					JOptionPane.showMessageDialog(null, "Υπάρχουν μη συμπληρωμένα πεδία", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Ξ¥Ο€Ξ¬ΟΟ‡ΞΏΟ…Ξ½ ΞΌΞ· ΟƒΟ…ΞΌΟ€Ξ»Ξ·ΟΟ‰ΞΌΞ­Ξ½Ξ± Ο€ΞµΞ΄Ξ―Ξ±", "Ξ£Ο†Ξ¬Ξ»ΞΌΞ±", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
