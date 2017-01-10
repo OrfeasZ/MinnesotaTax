@@ -183,7 +183,7 @@ public class Taxpayer {
         calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
     }
 
-    public void removeReceiptFromList(int index) {
+    public void removeReceiptByIndex(int index) {
         receipts.remove(index);
 
         calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();

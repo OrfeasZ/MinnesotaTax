@@ -6,6 +6,8 @@ import gr.uoi.cse.taxcalc.gui.GUIUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ReceiptManagementDialog extends JDialog {
     private Taxpayer loadedTaxpayer;
@@ -49,7 +51,51 @@ public class ReceiptManagementDialog extends JDialog {
     }
 
     private void initHandlers() {
+        setAddReceiptHandler();
+        setDeleteReceiptHandler();
+        setShowReceiptDetailsHandler();
+    }
 
+    private void setAddReceiptHandler() {
+        addReceiptButton.addActionListener(arg0 -> {
+            NewReceiptDialog newReceiptDialog = new NewReceiptDialog(loadedTaxpayer);
+
+            newReceiptDialog.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    populateReceipts();
+                }
+            });
+
+            newReceiptDialog.setVisible(true);
+        });
+    }
+
+    private void setDeleteReceiptHandler() {
+        deleteReceiptButton.addActionListener(e -> {
+            if (receiptList.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποια απόδειξη απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Διαγραφή επιλεγμένης απόδειξης (" + receiptList.getSelectedValue() + ") ?", "Επιβεβαίωση διαγραφής", JOptionPane.YES_NO_OPTION);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                loadedTaxpayer.removeReceiptByIndex(receiptList.getSelectedIndex());
+                populateReceipts();
+            }
+        });
+    }
+
+    private void setShowReceiptDetailsHandler() {
+        showReceiptDetailsButton.addActionListener(arg0 -> {
+            if (receiptList.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποια απόδειξη απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            JOptionPane.showMessageDialog(null, loadedTaxpayer.getReceipt(receiptList.getSelectedIndex()).toString(), receiptList.getSelectedValue(), JOptionPane.PLAIN_MESSAGE);
+        });
     }
 
     private void populateReceipts() {
