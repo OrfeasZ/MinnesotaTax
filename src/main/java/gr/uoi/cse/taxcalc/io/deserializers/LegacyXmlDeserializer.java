@@ -30,7 +30,11 @@ public class LegacyXmlDeserializer implements Deserializer {
         while (scanner.hasNextLine()) {
             String fileLine = scanner.nextLine();
 
-            if (fileLine.isEmpty() || fileLine.contains("<Receipts>") || fileLine.contains("</Receipts>")) {
+            if (fileLine.isEmpty() || fileLine.contains("<Receipts>")) {
+                continue;
+            }
+
+            if (fileLine.contains("</Receipts>")) {
                 break;
             }
 
