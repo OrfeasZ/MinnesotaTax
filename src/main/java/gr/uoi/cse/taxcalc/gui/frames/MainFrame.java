@@ -1,9 +1,13 @@
 package gr.uoi.cse.taxcalc.gui.frames;
 
+import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.gui.GUIUtils;
+import gr.uoi.cse.taxcalc.gui.dialogs.DataImportDialog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
     private JLabel taxpayerCountLabel;
@@ -18,14 +22,42 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        initFrame();
+        initElements();
+        initHandlers();
     }
 
-    private void initFrame() {
+    private void initElements() {
         GUIUtils.addLabel(getContentPane(), "Συν. αριθμός φορολογούμενων:", Color.BLUE, new Rectangle(30, 11, 218, 33), new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
         taxpayerCountLabel = GUIUtils.addLabel(getContentPane(), "0", Color.RED, new Rectangle(247, 20, 75, 14), new Font("Tahoma", Font.BOLD, 14), SwingConstants.LEFT);
         GUIUtils.addSeparator(getContentPane(), new Rectangle(29, 42, 293, 2));
         loadDataButton = GUIUtils.addButton(getContentPane(), "Φόρτωση δεδομένων φορολογούμενου (-ων)", new Rectangle(27, 55, 295, 53), new Font("Tahoma", Font.BOLD, 11));
         showTaxpayersButton = GUIUtils.addButton(getContentPane(), "Εμφάνιση λίστας φορολογουμένων", new Rectangle(27, 121, 295, 53), new Font("Tahoma", Font.BOLD, 11), false);
+    }
+
+    private void initHandlers() {
+        setLoadDataHandler();
+    }
+
+    private void setLoadDataHandler() {
+        loadDataButton.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setDialogTitle("Επιλέξτε τον φάκελο που περιέχει τα <AFM>_INFO.* αρχεία");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                DataImportDialog dataImportDialog = new DataImportDialog(chooser.getSelectedFile().toString());
+
+                dataImportDialog.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        taxpayerCountLabel.setText(String.valueOf(Database.getTaxpayerCount()));
+                        showTaxpayersButton.setEnabled(Database.getTaxpayerCount() > 0);
+                    }
+                });
+
+                dataImportDialog.setVisible(true);
+            }
+        });
     }
 }

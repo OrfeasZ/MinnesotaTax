@@ -45,6 +45,14 @@ public class GUIUtils {
         return panel;
     }
 
+    public static JScrollPane addScrollPane(Container container, Rectangle bounds) {
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(bounds);
+        container.add(scrollPane);
+
+        return scrollPane;
+    }
+
     public static JButton addButton(Container container, String text, Rectangle bounds) {
         return addButton(container, text, bounds, defaultFont, text, true);
     }
