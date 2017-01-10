@@ -3,6 +3,7 @@ package gr.uoi.cse.taxcalc.gui.frames;
 import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.gui.GUIUtils;
 import gr.uoi.cse.taxcalc.gui.dialogs.DataImportDialog;
+import gr.uoi.cse.taxcalc.gui.dialogs.TaxpayersDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +37,7 @@ public class MainFrame extends JFrame {
 
     private void initHandlers() {
         setLoadDataHandler();
+        setShowTaxpayersHandler();
     }
 
     private void setLoadDataHandler() {
@@ -51,13 +53,32 @@ public class MainFrame extends JFrame {
                 dataImportDialog.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e) {
-                        taxpayerCountLabel.setText(String.valueOf(Database.getTaxpayerCount()));
-                        showTaxpayersButton.setEnabled(Database.getTaxpayerCount() > 0);
+                        updateTaxpayerData();
                     }
                 });
 
                 dataImportDialog.setVisible(true);
             }
         });
+    }
+
+    private void setShowTaxpayersHandler() {
+        showTaxpayersButton.addActionListener(e -> {
+            TaxpayersDialog taxpayersDialog = new TaxpayersDialog();
+
+            taxpayersDialog.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    updateTaxpayerData();
+                }
+            });
+
+            taxpayersDialog.setVisible(true);
+        });
+    }
+
+    private void updateTaxpayerData() {
+        taxpayerCountLabel.setText(String.valueOf(Database.getTaxpayerCount()));
+        showTaxpayersButton.setEnabled(Database.getTaxpayerCount() > 0);
     }
 }
