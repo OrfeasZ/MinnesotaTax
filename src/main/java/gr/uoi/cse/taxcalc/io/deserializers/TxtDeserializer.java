@@ -63,7 +63,7 @@ public class TxtDeserializer implements Deserializer {
         return new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
     }
 
-    private static String getParameterValueFromTxtFileLine(String fileLine, String parameterName){
+    private String getParameterValueFromTxtFileLine(String fileLine, String parameterName) {
         return fileLine.substring(parameterName.length(), fileLine.length());
     }
 }

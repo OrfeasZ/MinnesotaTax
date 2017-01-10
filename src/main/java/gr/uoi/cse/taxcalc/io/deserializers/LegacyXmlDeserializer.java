@@ -63,7 +63,7 @@ public class LegacyXmlDeserializer implements Deserializer {
         return new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
     }
 
-    private static String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField){
+    private String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField) {
         return fileLine.substring(parameterStartField.length(), fileLine.length() - parameterEndField.length());
     }
 }
