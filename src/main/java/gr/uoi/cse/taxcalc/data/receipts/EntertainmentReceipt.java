@@ -1,4 +1,4 @@
-package gr.uoi.cse.taxcalc.dataManagePackage.Receipt;
+package gr.uoi.cse.taxcalc.data.receipts;
 
 public class EntertainmentReceipt extends Receipt{
 	private final String kind = "Entertainment";

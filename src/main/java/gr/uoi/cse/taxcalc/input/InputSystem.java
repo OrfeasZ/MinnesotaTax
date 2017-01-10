@@ -1,9 +1,9 @@
-package gr.uoi.cse.taxcalc.inputManagePackage;
+package gr.uoi.cse.taxcalc.input;
 
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.Receipt;
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.ReceiptFactory;
-import gr.uoi.cse.taxcalc.dataManagePackage.Taxpayer;
+import gr.uoi.cse.taxcalc.data.Database;
+import gr.uoi.cse.taxcalc.data.receipts.Receipt;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptFactory;
+import gr.uoi.cse.taxcalc.data.Taxpayer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -48,7 +48,7 @@ public class InputSystem {
 			if (fileLine.equals("")) continue;
 			if (fileLine.indexOf("Receipts:")!=-1) continue;
 			
-			String receiptID = getParameterValueFromTxtFileLine(fileLine, "Receipt ID: ");
+			String receiptID = getParameterValueFromTxtFileLine(fileLine, "receipts ID: ");
 			String receiptDate = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Date: ");
 			String receiptKind = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Kind: ");
 			String receiptAmount = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Amount: ");

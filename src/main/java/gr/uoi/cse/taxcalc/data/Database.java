@@ -1,7 +1,7 @@
-package gr.uoi.cse.taxcalc.dataManagePackage;
+package gr.uoi.cse.taxcalc.data;
 
-import gr.uoi.cse.taxcalc.inputManagePackage.InputSystem;
-import gr.uoi.cse.taxcalc.outputManagePackage.OutputSystem;
+import gr.uoi.cse.taxcalc.input.InputSystem;
+import gr.uoi.cse.taxcalc.output.OutputSystem;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;

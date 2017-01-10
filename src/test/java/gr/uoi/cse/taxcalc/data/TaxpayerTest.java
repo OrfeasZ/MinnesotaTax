@@ -1,8 +1,8 @@
-package gr.uoi.cse.taxcalc.dataManagePackage;
+package gr.uoi.cse.taxcalc.data;
 
 import org.junit.Test;
 
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.ReceiptFactory;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptFactory;
 
 import static org.junit.Assert.*;
 

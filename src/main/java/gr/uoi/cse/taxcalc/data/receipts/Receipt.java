@@ -1,4 +1,4 @@
-package gr.uoi.cse.taxcalc.dataManagePackage.Receipt;
+package gr.uoi.cse.taxcalc.data.receipts;
 
 import java.math.BigDecimal;
 

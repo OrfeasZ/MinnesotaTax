@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
+import gr.uoi.cse.taxcalc.data.Database;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;

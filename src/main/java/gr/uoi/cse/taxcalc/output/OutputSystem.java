@@ -1,8 +1,8 @@
-package gr.uoi.cse.taxcalc.outputManagePackage;
+package gr.uoi.cse.taxcalc.output;
 
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.Receipt;
-import gr.uoi.cse.taxcalc.dataManagePackage.Taxpayer;
+import gr.uoi.cse.taxcalc.data.Database;
+import gr.uoi.cse.taxcalc.data.receipts.Receipt;
+import gr.uoi.cse.taxcalc.data.Taxpayer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
@@ -45,7 +45,7 @@ public class OutputSystem {
 			outputStream.println();
 			
 			for (Receipt receipt : taxpayer.getReceiptsArrayList()){
-				outputStream.println("Receipt ID: "+receipt.getId());
+				outputStream.println("receipts ID: "+receipt.getId());
 				outputStream.println("Date: "+receipt.getDate());
 				outputStream.println("Kind: "+receipt.getKind());
 				outputStream.println("Amount: "+receipt.getAmount());
@@ -112,7 +112,7 @@ public class OutputSystem {
 		receiptPieChartDataset.setValue("Health", taxpayer.getHealthReceiptsTotalAmount());
 		receiptPieChartDataset.setValue("Other", taxpayer.getOtherReceiptsTotalAmount());
 		
-		JFreeChart receiptPieJFreeChart = ChartFactory.createPieChart("Receipt Pie Chart", receiptPieChartDataset);
+		JFreeChart receiptPieJFreeChart = ChartFactory.createPieChart("receipts Pie Chart", receiptPieChartDataset);
 		PiePlot piePlot = (PiePlot)receiptPieJFreeChart.getPlot();
 		PieSectionLabelGenerator generator = new StandardPieSectionLabelGenerator("{0}: {1}$ ({2})", new DecimalFormat("0.00"), new DecimalFormat("0.00%"));
 		piePlot.setLabelGenerator(generator); 

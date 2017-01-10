@@ -16,8 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
-import gr.uoi.cse.taxcalc.outputManagePackage.OutputSystem;
+import gr.uoi.cse.taxcalc.data.Database;
+import gr.uoi.cse.taxcalc.output.OutputSystem;
 
 public class LoadedTaxpayersJDialog extends JDialog {
 

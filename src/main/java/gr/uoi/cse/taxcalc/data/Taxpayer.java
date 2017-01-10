@@ -1,6 +1,6 @@
-package gr.uoi.cse.taxcalc.dataManagePackage;
+package gr.uoi.cse.taxcalc.data;
 
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.Receipt;
+import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package gr.uoi.cse.taxcalc.dataManagePackage.Receipt;
+package gr.uoi.cse.taxcalc.data.receipts;
 
 public class BasicReceipt extends Receipt{
 	private final String kind = "Basic";

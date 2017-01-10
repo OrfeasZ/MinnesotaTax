@@ -15,9 +15,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.Receipt;
-import gr.uoi.cse.taxcalc.dataManagePackage.Receipt.ReceiptFactory;
+import gr.uoi.cse.taxcalc.data.Database;
+import gr.uoi.cse.taxcalc.data.receipts.Receipt;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptFactory;
 
 public class InsertNewReceiptJDialog extends JDialog {
 
@@ -121,7 +121,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 		cancelButton.setActionCommand("Cancel");
 		okCancelButtonsPanel.add(cancelButton);
 		
-		JLabel receiptIdLabel = new JLabel("Receipt ID:");
+		JLabel receiptIdLabel = new JLabel("receipts ID:");
 		receiptIdLabel.setForeground(Color.BLUE);
 		receiptIdLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		receiptIdLabel.setBounds(20, 11, 99, 25);

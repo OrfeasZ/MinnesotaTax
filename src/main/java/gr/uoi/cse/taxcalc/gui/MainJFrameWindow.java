@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import java.awt.Color;
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
+import gr.uoi.cse.taxcalc.data.Database;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 

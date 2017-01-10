@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import gr.uoi.cse.taxcalc.dataManagePackage.Database;
+import gr.uoi.cse.taxcalc.data.Database;
 
 public class TaxpayerReceiptsManagementJDialog extends JDialog {
 
