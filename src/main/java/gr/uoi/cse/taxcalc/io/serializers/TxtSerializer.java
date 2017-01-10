@@ -75,11 +75,11 @@ public class TxtSerializer extends Serializer {
     }
 
     private void writeLine(Writer writer) throws IOException {
-        writer.write("\n");
+        writer.append("\n");
     }
 
     private void writeLine(String line, Writer writer) throws IOException {
-        writer.write(line);
-        writer.write("\n");
+        writer.append(line);
+        writer.append("\n");
     }
 }

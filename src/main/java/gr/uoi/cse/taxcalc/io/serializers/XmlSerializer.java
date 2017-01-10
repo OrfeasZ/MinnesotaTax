@@ -3,18 +3,9 @@ package gr.uoi.cse.taxcalc.io.serializers;
 import gr.uoi.cse.taxcalc.data.Taxpayer;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -25,102 +16,72 @@ public class XmlSerializer extends Serializer {
     }
 
     @Override
-    public void serializeFull(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException {
-        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+    public void serializeFull(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
+        serializeTaxpayer(taxpayer, writer);
 
-        Document dom = db.newDocument();
-
-        // Create our taxpayer.
-        Element taxpayerElement = dom.createElement("Taxpayer");
-        addTaxpayerAttributes(taxpayer, taxpayerElement);
-
-        // Add the Receipts.
-        Element receiptsElement = dom.createElement("Receipts");
-
-        for (Receipt receipt : taxpayer.getReceipts()) {
-            addReceipt(receipt, receiptsElement);
+        if (taxpayer.getReceipts().size() == 0) {
+            return;
         }
 
-        taxpayerElement.appendChild(receiptsElement);
+        writeLine(writer);
+        writeLine("<Receipts>", writer);
+        writeLine(writer);
 
-        // Add the taxpayer to the document.
-        dom.appendChild(taxpayerElement);
+        for (Receipt receipt : taxpayer.getReceipts()) {
+            serializeReceipt(receipt, writer);
+        }
 
-        // Write to our writer.
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.transform(new DOMSource(dom), new StreamResult(writer));
+        writeLine("</Receipts>", writer);
     }
 
     @Override
     public void serializeInfo(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
-        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-
-        Document dom = db.newDocument();
-
-        // Create our taxpayer.
-        Element taxpayerElement = dom.createElement("Taxpayer");
-        addTaxpayerInfoAttributes(taxpayer, taxpayerElement);
-
-        // Add the taxpayer to the document.
-        dom.appendChild(taxpayerElement);
-
-        // Write to our writer.
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.transform(new DOMSource(dom), new StreamResult(writer));
-    }
-
-    private void addTaxpayerAttributes(Taxpayer taxpayer, Element taxpayerElement) {
-        addChild("Name", taxpayer.getName(), taxpayerElement);
-        addChild("TID", taxpayer.getAFM(), taxpayerElement);
-        addChild("FamilyStatus", taxpayer.getFamilyStatus().toString(), taxpayerElement);
-        addChild("Income", Double.toString(taxpayer.getIncome()), taxpayerElement);
-    }
-
-    private void addTaxpayerInfoAttributes(Taxpayer taxpayer, Element taxpayerElement) {
-        addChild("Name", taxpayer.getName(), taxpayerElement);
-        addChild("TID", taxpayer.getAFM(), taxpayerElement);
-        addChild("Income", Double.toString(taxpayer.getIncome()), taxpayerElement);
-        addChild("BasicTax", Double.toString(taxpayer.getBasicTax()), taxpayerElement);
+        writeLine("<Name> " + taxpayer.getName() + " </Name>", writer);
+        writeLine("<AFM> " + taxpayer.getAFM() + " </AFM>", writer);
+        writeLine("<Income> " + taxpayer.getIncome() + " </Income>", writer);
+        writeLine("<BasicTax> " + taxpayer.getBasicTax() + " </BasicTax>", writer);
 
         if (taxpayer.getTaxIncrease() != 0) {
-            addChild("TaxIncrease", Double.toString(taxpayer.getTaxIncrease()), taxpayerElement);
+            writeLine("<TaxIncrease> " + taxpayer.getTaxIncrease() + " </TaxIncrease>", writer);
         } else {
-            addChild("TaxDecrease", Double.toString(taxpayer.getTaxDecrease()), taxpayerElement);
+            writeLine("<TaxDecrease> " + taxpayer.getTaxDecrease() + " </TaxDecrease>", writer);
         }
 
-        addChild("TotalTax", Double.toString(taxpayer.getTotalTax()), taxpayerElement);
-        addChild("Receipts", Double.toString(taxpayer.getTotalReceiptsAmount()), taxpayerElement);
-        addChild("Entertainment", Double.toString(taxpayer.getReceiptsTotalAmount(ReceiptKind.ENTERTAINMENT)), taxpayerElement);
-        addChild("Basic", Double.toString(taxpayer.getReceiptsTotalAmount(ReceiptKind.BASIC)), taxpayerElement);
-        addChild("Travel", Double.toString(taxpayer.getReceiptsTotalAmount(ReceiptKind.TRAVEL)), taxpayerElement);
-        addChild("Health", Double.toString(taxpayer.getReceiptsTotalAmount(ReceiptKind.HEALTH)), taxpayerElement);
-        addChild("Other", Double.toString(taxpayer.getReceiptsTotalAmount(ReceiptKind.OTHER)), taxpayerElement);
+        writeLine("<TotalTax> " + taxpayer.getTotalTax() + " </TotalTax>", writer);
+        writeLine("<Receipts> " + taxpayer.getTotalReceiptsAmount() + " </Receipts>", writer);
+        writeLine("<Entertainment> " + taxpayer.getReceiptsTotalAmount(ReceiptKind.ENTERTAINMENT) + " </Entertainment>", writer);
+        writeLine("<Basic> " + taxpayer.getReceiptsTotalAmount(ReceiptKind.BASIC) + " </Basic>", writer);
+        writeLine("<Travel> " + taxpayer.getReceiptsTotalAmount(ReceiptKind.TRAVEL) + " </Travel>", writer);
+        writeLine("<Health> " + taxpayer.getReceiptsTotalAmount(ReceiptKind.HEALTH) + " </Health>", writer);
+        writeLine("<Other> " + taxpayer.getReceiptsTotalAmount(ReceiptKind.OTHER) + " </Other>", writer);
     }
 
-    private void addReceipt(Receipt receipt, Element receiptsElement) {
-        Element receiptElement = receiptsElement.getOwnerDocument().createElement("Receipt");
-
-        // Add the ID.
-        Attr id = receiptsElement.getOwnerDocument().createAttribute("id");
-        id.setValue(receipt.getId());
-        receiptElement.setAttributeNode(id);
-
-        // Add the members.
-        addChild("Kind", receipt.getKind().toString(), receiptElement);
-        addChild("Date", receipt.getDate(), receiptElement);
-        addChild("Amount", Double.toString(receipt.getAmount()), receiptElement);
-        addChild("Name", receipt.getCompany().getName(), receiptElement);
-        addChild("Country", receipt.getCompany().getCountry(), receiptElement);
-        addChild("City", receipt.getCompany().getCity(), receiptElement);
-        addChild("Street", receipt.getCompany().getStreet(), receiptElement);
-        addChild("Number", receipt.getCompany().getNumber(), receiptElement);
-
-        receiptsElement.appendChild(receiptElement);
+    private void serializeTaxpayer(Taxpayer taxpayer, Writer writer) throws IOException {
+        writeLine("<Name> " + taxpayer.getName() + " </Name>", writer);
+        writeLine("<AFM> " + taxpayer.getAFM() + " </AFM>", writer);
+        writeLine("<Status> " + taxpayer.getFamilyStatus() + " </Status>", writer);
+        writeLine("<Income> " + taxpayer.getIncome() + " </Income>", writer);
     }
 
-    private void addChild(String name, String value, Element element) {
-        Element attribute = element.getOwnerDocument().createElement(name);
-        attribute.appendChild(element.getOwnerDocument().createTextNode(value));
-        element.appendChild(attribute);
+    private void serializeReceipt(Receipt receipt, Writer writer) throws IOException {
+        writeLine("<ReceiptID> " + receipt.getId() + " </ReceiptID>", writer);
+        writeLine("<Date> " + receipt.getDate() + " </Date>", writer);
+        writeLine("<Kind> " + receipt.getKind() + " </Kind>", writer);
+        writeLine("<Amount> " + receipt.getAmount() + " </Amount>", writer);
+        writeLine("<Company> " + receipt.getCompany().getName() + " </Company>", writer);
+        writeLine("<Country> " + receipt.getCompany().getCountry() + " </Country>", writer);
+        writeLine("<City> " + receipt.getCompany().getCity() + " </City>", writer);
+        writeLine("<Street> " + receipt.getCompany().getStreet() + " </Street>", writer);
+        writeLine("<Number> " + receipt.getCompany().getNumber() + " </Number>", writer);
+        writeLine(writer);
+    }
+
+    private void writeLine(Writer writer) throws IOException {
+        writer.append("\n");
+    }
+
+    private void writeLine(String line, Writer writer) throws IOException {
+        writer.append(line);
+        writer.append("\n");
     }
 }

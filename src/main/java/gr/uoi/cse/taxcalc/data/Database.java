@@ -4,7 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
+    private static String dataFolder;
     private static ArrayList<Taxpayer> taxpayers = new ArrayList<>();
+
+    public static String getDataFolder() {
+        return dataFolder;
+    }
+
+    public static void setDataFolder(String folder) {
+        dataFolder = folder;
+    }
 
     public static void addTaxpayer(Taxpayer taxpayer) {
         taxpayers.add(taxpayer);
