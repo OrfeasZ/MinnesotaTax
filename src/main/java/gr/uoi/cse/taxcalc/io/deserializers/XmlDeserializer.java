@@ -38,7 +38,7 @@ public class XmlDeserializer implements Deserializer {
                 break;
             }
 
-            taxpayer.addReceiptToList(parseReceipt(fileLine, scanner));
+            taxpayer.addReceipt(parseReceipt(fileLine, scanner));
         }
 
         return taxpayer;

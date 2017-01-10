@@ -85,12 +85,14 @@ public class Taxpayer {
 
     private void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
         double totalReceiptsAmount = 0;
+
         for (Receipt receipt : receipts) {
             totalReceiptsAmount += receipt.getAmount();
         }
 
         taxIncrease = 0;
         taxDecrease = 0;
+
         if ((totalReceiptsAmount / income) < 0.2) {
             taxIncrease = basicTax * 0.08;
         } else if ((totalReceiptsAmount / income) < 0.4) {
@@ -112,15 +114,16 @@ public class Taxpayer {
         return receipts;
     }
 
-    public String[] getReceiptsList() {
-        String[] receiptsList = new String[receipts.size()];
+    public void addReceipt(Receipt receipt) {
+        receipts.add(receipt);
 
-        int c = 0;
-        for (Receipt receipt : receipts) {
-            receiptsList[c++] = receipt.getId() + " | " + receipt.getDate() + " | " + receipt.getAmount();
-        }
+        calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
+    }
 
-        return receiptsList;
+    public void removeReceiptByIndex(int index) {
+        receipts.remove(index);
+
+        calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
     }
 
     public double getReceiptsTotalAmount(ReceiptKind kind) {
@@ -175,18 +178,6 @@ public class Taxpayer {
 
     public double getTotalTax() {
         return (new BigDecimal(totalTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-    }
-
-    public void addReceiptToList(Receipt receipt) {
-        receipts.add(receipt);
-
-        calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
-    }
-
-    public void removeReceiptByIndex(int index) {
-        receipts.remove(index);
-
-        calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
     }
 
     public String toString() {

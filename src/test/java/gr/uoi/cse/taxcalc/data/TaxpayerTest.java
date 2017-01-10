@@ -10,9 +10,9 @@ public class TaxpayerTest {
     @Test
     public void getTotalReceiptsAmount() throws Exception {
         Taxpayer taxpayer = new Taxpayer("John", "123456789", FamilyStatus.SINGLE, 85000.0);
-        taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 100.0, "c", "d", "e", "f", "g"));
-        taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 200.0, "c", "d", "e", "f", "g"));
-        taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 300.0, "c", "d", "e", "f", "g"));
+        taxpayer.addReceipt(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 100.0, "c", "d", "e", "f", "g"));
+        taxpayer.addReceipt(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 200.0, "c", "d", "e", "f", "g"));
+        taxpayer.addReceipt(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 300.0, "c", "d", "e", "f", "g"));
 
         assertEquals(taxpayer.getTotalReceiptsAmount(), 600.0, Math.ulp(1.0));
     }
@@ -34,7 +34,7 @@ public class TaxpayerTest {
     @Test
     public void getTaxInxrease() throws Exception {
         Taxpayer taxpayer = new Taxpayer("John", "123456789", FamilyStatus.SINGLE, 85000.0);
-        taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 100.0, "c", "d", "e", "f", "g"));
+        taxpayer.addReceipt(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 100.0, "c", "d", "e", "f", "g"));
 
         assertEquals(taxpayer.getBasicTax(), 5604.3, Math.ulp(1.0));
         assertEquals(taxpayer.getTaxIncrease(), 448.34, Math.ulp(1.0));
@@ -43,7 +43,7 @@ public class TaxpayerTest {
     @Test
     public void getTaxDecrease() throws Exception {
         Taxpayer taxpayer = new Taxpayer("John", "123456789", FamilyStatus.SINGLE, 85000.0);
-        taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 42500.0, "c", "d", "e", "f", "g"));
+        taxpayer.addReceipt(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 42500.0, "c", "d", "e", "f", "g"));
 
         assertEquals(taxpayer.getBasicTax(), 5604.3, Math.ulp(1.0));
         assertEquals(taxpayer.getTaxDecrease(), 840.64, Math.ulp(1.0));
@@ -52,7 +52,7 @@ public class TaxpayerTest {
     @Test
     public void getTotalTax() throws Exception {
         Taxpayer taxpayer = new Taxpayer("John", "123456789", FamilyStatus.SINGLE, 85000.0);
-        taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 42500.0, "c", "d", "e", "f", "g"));
+        taxpayer.addReceipt(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 42500.0, "c", "d", "e", "f", "g"));
 
         assertEquals(taxpayer.getBasicTax(), 5604.3, Math.ulp(1.0));
         assertEquals(taxpayer.getTotalTax(), 4763.66, Math.ulp(1.0));

@@ -109,7 +109,7 @@ class NewReceiptDialog extends JDialog {
                     dateField.getText(), Double.parseDouble(amountField.getText()), companyField.getText(),
                     countryField.getText(), cityField.getText(), streetField.getText(), numberField.getText());
 
-            loadedTaxpayer.addReceiptToList(newReceipt);
+            loadedTaxpayer.addReceipt(newReceipt);
             dispose();
         });
     }

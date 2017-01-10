@@ -34,7 +34,7 @@ public class TxtDeserializer implements Deserializer {
                 continue;
             }
 
-            taxpayer.addReceiptToList(parseReceipt(fileLine, scanner));
+            taxpayer.addReceipt(parseReceipt(fileLine, scanner));
         }
 
         return taxpayer;
