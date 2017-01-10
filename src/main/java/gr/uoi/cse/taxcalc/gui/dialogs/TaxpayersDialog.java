@@ -7,7 +7,12 @@ import gr.uoi.cse.taxcalc.io.ExportFormat;
 import gr.uoi.cse.taxcalc.io.OutputSystem;
 
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class TaxpayersDialog extends JDialog {
     private JList<String> taxpayerList;
@@ -103,7 +108,22 @@ public class TaxpayersDialog extends JDialog {
                 return;
             }
 
-            ReceiptManagementDialog receiptManagementDialog = new ReceiptManagementDialog(Database.getTaxpayerByIndex(taxpayerList.getSelectedIndex()));
+            Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerList.getSelectedIndex());
+
+            ReceiptManagementDialog receiptManagementDialog = new ReceiptManagementDialog(taxpayer);
+
+            // Set a handler to save the taxpayer data when the receipts dialog gets closed.
+            receiptManagementDialog.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    try {
+                        OutputSystem.exportTaxpayerFull(taxpayer, Database.getDataFolder());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Παρουσιάστηκε σφάλμα κατα την αποθήκευση του αρχείου. Οι αλλαγές σας δεν αποθηκεύτηκαν.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            });
+
             receiptManagementDialog.setVisible(true);
         });
     }
@@ -153,7 +173,7 @@ public class TaxpayersDialog extends JDialog {
                 try {
                     OutputSystem.exportTaxpayerInfo(Database.getTaxpayerByIndex(taxpayerIndex), savePath, ExportFormat.TXT);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Παρουσιάστηκε σφάλμα κατα την αποθήκευση του αρχείου", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Παρουσιάστηκε σφάλμα κατα την αποθήκευση του αρχείου.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -178,7 +198,7 @@ public class TaxpayersDialog extends JDialog {
                 try {
                     OutputSystem.exportTaxpayerInfo(Database.getTaxpayerByIndex(taxpayerIndex), savePath, ExportFormat.XML);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Παρουσιάστηκε σφάλμα κατα την αποθήκευση του αρχείου", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Παρουσιάστηκε σφάλμα κατα την αποθήκευση του αρχείου.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });

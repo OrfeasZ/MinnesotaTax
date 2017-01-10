@@ -91,9 +91,7 @@ public class DataImportDialog extends JDialog {
 
     private void populateFiles() {
         File folder = new File(folderPath);
-        File[] folderFiles = folder.listFiles((dir, name) -> (name.toLowerCase().endsWith("_info.txt") ||
-                name.toLowerCase().endsWith("_info.xml") ||
-                name.toLowerCase().endsWith("_info_legacy.xml")));
+        File[] folderFiles = folder.listFiles((dir, name) -> (name.toLowerCase().endsWith("_info.txt") || name.toLowerCase().endsWith("_info.xml")));
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
 
