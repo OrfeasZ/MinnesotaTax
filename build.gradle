@@ -18,7 +18,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-mainClassName = "gr.uoi.cse.taxcalc.gui.MainJFrameWindow"
+mainClassName = "gr.uoi.cse.taxcalc.Entry"
 
 jar {
     manifest {

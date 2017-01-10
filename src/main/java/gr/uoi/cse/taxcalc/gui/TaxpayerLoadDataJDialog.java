@@ -1,3 +1,4 @@
+/*
 package gr.uoi.cse.taxcalc.gui;
 
 import javax.swing.JButton;
@@ -131,3 +132,4 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 		});
 	}
 }
+*/

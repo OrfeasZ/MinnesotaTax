@@ -1,3 +1,4 @@
+/*
 package gr.uoi.cse.taxcalc.gui;
 
 import javax.swing.JButton;
@@ -208,3 +209,4 @@ public class InsertNewReceiptJDialog extends JDialog {
 		});
 	}
 }
+*/

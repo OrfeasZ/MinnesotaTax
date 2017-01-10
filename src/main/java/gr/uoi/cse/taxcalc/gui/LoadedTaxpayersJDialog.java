@@ -1,3 +1,4 @@
+/*
 package gr.uoi.cse.taxcalc.gui;
 
 import java.awt.Color;
@@ -234,3 +235,4 @@ public class LoadedTaxpayersJDialog extends JDialog {
 		});
 	}
 }
+*/

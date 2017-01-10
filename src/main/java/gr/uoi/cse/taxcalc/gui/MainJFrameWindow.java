@@ -1,3 +1,4 @@
+/*
 package gr.uoi.cse.taxcalc.gui;
 
 import java.awt.EventQueue;
@@ -115,3 +116,4 @@ public class MainJFrameWindow {
 		});
 	}
 }
+*/

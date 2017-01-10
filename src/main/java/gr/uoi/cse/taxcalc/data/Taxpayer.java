@@ -91,11 +91,11 @@ public class Taxpayer {
 
         taxIncrease = 0;
         taxDecrease = 0;
-        if ((totalReceiptsAmount / (double) income) < 0.2) {
+        if ((totalReceiptsAmount / income) < 0.2) {
             taxIncrease = basicTax * 0.08;
-        } else if ((totalReceiptsAmount / (double) income) < 0.4) {
+        } else if ((totalReceiptsAmount / income) < 0.4) {
             taxIncrease = basicTax * 0.04;
-        } else if ((totalReceiptsAmount / (double) income) < 0.6) {
+        } else if ((totalReceiptsAmount / income) < 0.6) {
             taxDecrease = basicTax * 0.15;
         } else {
             taxDecrease = basicTax * 0.30;
@@ -188,6 +188,7 @@ public class Taxpayer {
 
         calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
     }
+
     public String toString() {
         return "Name: " + name
                 + "\nAFM: " + afm

@@ -1,3 +1,4 @@
+/*
 package gr.uoi.cse.taxcalc.io;
 
 import gr.uoi.cse.taxcalc.data.Database;
@@ -218,3 +219,4 @@ public class OutputSystemLegacy {
 		JOptionPane.showMessageDialog(null, "Η αποθήκευση ολοκληρώθηκε", "Μήνυμα", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package gr.uoi.cse.taxcalc.gui;
 
 import javax.swing.AbstractListModel;
@@ -129,3 +130,4 @@ public class TaxpayerReceiptsManagementJDialog extends JDialog {
 		});
 	}
 }
+*/
