@@ -4,8 +4,6 @@ import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
 import org.junit.Test;
 
-import gr.uoi.cse.taxcalc.data.receipts.ReceiptFactory;
-
 import static org.junit.Assert.*;
 
 public class TaxpayerTest {
