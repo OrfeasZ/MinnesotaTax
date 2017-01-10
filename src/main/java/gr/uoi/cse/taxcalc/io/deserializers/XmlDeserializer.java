@@ -15,19 +15,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class XmlDeserializer implements Deserializer {
     @Override
-    public List<Taxpayer> deserializeFile(String path) throws ParserConfigurationException, IOException, SAXException {
+    public Taxpayer deserializeFile(String path) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document dom = db.parse(path);
         return deserializeInternal(dom);
     }
 
     @Override
-    public List<Taxpayer> deserializeData(String data) throws ParserConfigurationException, IOException, SAXException {
+    public Taxpayer deserializeData(String data) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         InputSource source = new InputSource();
         source.setCharacterStream(new StringReader(data));
@@ -35,45 +33,33 @@ public class XmlDeserializer implements Deserializer {
         return deserializeInternal(dom);
     }
 
-    private List<Taxpayer> deserializeInternal(Document dom) {
-        List<Taxpayer> taxpayers = new ArrayList<>();
+    private Taxpayer deserializeInternal(Document dom) {
+        // Create our taxpayer object.
+        Taxpayer taxpayer = parseTaxpayer(dom);
 
-        // Get all available taxpayers.
-        NodeList taxpayerNodes = dom.getElementsByTagName("Taxpayer");
+        // Read the receipts.
+        NodeList receiptNodes = dom.getElementsByTagName("Receipts");
 
-        for (int i = 0; i < taxpayerNodes.getLength(); ++i) {
-            Element taxpayerElement = (Element) taxpayerNodes.item(i);
-
-            // Create our taxpayer object.
-            Taxpayer taxpayer = parseTaxpayer(taxpayerElement);
-
-            // Read the receipts.
-            NodeList receiptNodes = taxpayerElement.getElementsByTagName("Receipts");
-
-            for (int j = 0; j < receiptNodes.getLength(); ++j) {
-                Element receiptElement = (Element) receiptNodes.item(j);
-                taxpayer.addReceiptToList(parseReceipt(receiptElement));
-            }
-
-            // Add the fully parsed taxpayer to the list.
-            taxpayers.add(taxpayer);
+        for (int j = 0; j < receiptNodes.getLength(); ++j) {
+            Element receiptElement = (Element) receiptNodes.item(j);
+            taxpayer.addReceiptToList(parseReceipt(receiptElement));
         }
 
-        return taxpayers;
+        return taxpayer;
     }
 
-    private Taxpayer parseTaxpayer(Element elem) {
+    private Taxpayer parseTaxpayer(Document elem) {
         return new Taxpayer(
                 elem.getElementsByTagName("Name").item(0).getNodeValue(),
                 elem.getElementsByTagName("TID").item(0).getNodeValue(),
-                FamilyStatus.valueOf(elem.getElementsByTagName("FamilyStatus").item(0).getNodeValue()),
+                FamilyStatus.getEnum(elem.getElementsByTagName("FamilyStatus").item(0).getNodeValue()),
                 Double.parseDouble(elem.getElementsByTagName("Income").item(0).getNodeValue())
         );
     }
 
     private Receipt parseReceipt(Element elem) {
         return new Receipt(
-                ReceiptKind.valueOf(elem.getElementsByTagName("Kind").item(0).getNodeValue()),
+                ReceiptKind.getEnum(elem.getElementsByTagName("Kind").item(0).getNodeValue()),
                 elem.getElementsByTagName("ID").item(0).getNodeValue(),
                 elem.getElementsByTagName("Date").item(0).getNodeValue(),
                 Double.parseDouble(elem.getElementsByTagName("Amount").item(0).getNodeValue()),

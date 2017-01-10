@@ -9,24 +9,22 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class LegacyXmlDeserializer implements Deserializer {
     @Override
-    public List<Taxpayer> deserializeFile(String path) throws FileNotFoundException {
+    public Taxpayer deserializeFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new FileInputStream(path));
         return deserializeInternal(scanner);
     }
 
     @Override
-    public List<Taxpayer> deserializeData(String data) {
+    public Taxpayer deserializeData(String data) {
         Scanner scanner = new Scanner(new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8)));
         return deserializeInternal(scanner);
     }
 
-    private List<Taxpayer> deserializeInternal(Scanner scanner) {
+    private Taxpayer deserializeInternal(Scanner scanner) {
         Taxpayer taxpayer = parseTaxpayer(scanner);
 
         while (scanner.hasNextLine()) {
@@ -39,7 +37,7 @@ public class LegacyXmlDeserializer implements Deserializer {
             taxpayer.addReceiptToList(parseReceipt(fileLine, scanner));
         }
 
-        return new ArrayList<Taxpayer>() {{ add(taxpayer); }};
+        return taxpayer;
     }
 
     private Taxpayer parseTaxpayer(Scanner scanner) {
@@ -48,7 +46,7 @@ public class LegacyXmlDeserializer implements Deserializer {
         String taxpayerStatus = getParameterValueFromXmlFileLine(scanner.nextLine(), "<Status> ", " </Status>");
         String taxpayerIncome = getParameterValueFromXmlFileLine(scanner.nextLine(), "<Income> ", " </Income>");
 
-        return new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.valueOf(taxpayerStatus), Double.parseDouble(taxpayerIncome));
+        return new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.getEnum(taxpayerStatus), Double.parseDouble(taxpayerIncome));
     }
 
     private Receipt parseReceipt(String firstLine, Scanner scanner) {
@@ -62,7 +60,7 @@ public class LegacyXmlDeserializer implements Deserializer {
         String receiptStreet = getParameterValueFromXmlFileLine(scanner.nextLine(), "<Street> ", " </Street>");
         String receiptNumber = getParameterValueFromXmlFileLine(scanner.nextLine(), "<Number> ", " </Number>");
 
-        return new Receipt(ReceiptKind.valueOf(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+        return new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
     }
 
     private static String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField){

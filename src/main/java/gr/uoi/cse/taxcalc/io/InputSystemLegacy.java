@@ -42,7 +42,7 @@ public class InputSystemLegacy {
 		String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
 		String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Status: ");
 		String taxpayerIncome = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Income: ");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.valueOf(taxpayerStatus), Double.parseDouble(taxpayerIncome));
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.getEnum(taxpayerStatus), Double.parseDouble(taxpayerIncome));
 		
 		String fileLine;
 		while (inputStream.hasNextLine())
@@ -60,12 +60,12 @@ public class InputSystemLegacy {
 			String receiptCity = getParameterValueFromTxtFileLine(inputStream.nextLine(), "City: ");
 			String receiptStreet = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Street: ");
 			String receiptNumber = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Number: ");
-			Receipt newReceipt = new Receipt(ReceiptKind.valueOf(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+			Receipt newReceipt = new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 			
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
 		
-		Database.addTaxpayerToList(newTaxpayer);
+		Database.addTaxpayer(newTaxpayer);
 	}
 	
 	private static String getParameterValueFromTxtFileLine(String fileLine, String parameterName){
@@ -88,7 +88,7 @@ public class InputSystemLegacy {
 		String taxpayerAFM = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<AFM> ", " </AFM>");
 		String taxpayerStatus = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Status> ", " </Status>");
 		String taxpayerIncome = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Income> ", " </Income>");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.valueOf(taxpayerStatus), Double.parseDouble(taxpayerIncome));
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.getEnum(taxpayerStatus), Double.parseDouble(taxpayerIncome));
 		
 		String fileLine;
 		while (inputStream.hasNextLine())
@@ -107,12 +107,12 @@ public class InputSystemLegacy {
 			String receiptCity = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<City> ", " </City>");
 			String receiptStreet = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Street> ", " </Street>");
 			String receiptNumber = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Number> ", " </Number>");
-			Receipt newReceipt = new Receipt(ReceiptKind.valueOf(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+			Receipt newReceipt = new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 			
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
 		
-		Database.addTaxpayerToList(newTaxpayer);
+		Database.addTaxpayer(newTaxpayer);
 	}
 	
 	private static String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField){

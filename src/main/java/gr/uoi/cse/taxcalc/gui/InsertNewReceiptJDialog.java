@@ -187,7 +187,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 						&& !amountTextField.getText().equals("") && !companyTextField.getText().equals("") && !countryTextField.getText().equals("")
 						&& !cityTextField.getText().equals("") && !streetTextField.getText().equals("") && !numberTextField.getText().equals("")){
 
-					Receipt newReceipt = new Receipt(ReceiptKind.valueOf(kindComboBox.getSelectedItem().toString()), receiptIdTextField.getText(),
+					Receipt newReceipt = new Receipt(ReceiptKind.getEnum(kindComboBox.getSelectedItem().toString()), receiptIdTextField.getText(),
 							dateTextField.getText(), Double.parseDouble(amountTextField.getText()), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
 					Database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);

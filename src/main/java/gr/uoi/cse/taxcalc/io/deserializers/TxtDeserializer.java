@@ -9,66 +9,48 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TxtDeserializer implements Deserializer {
     @Override
-    public List<Taxpayer> deserializeFile(String path) throws FileNotFoundException {
+    public Taxpayer deserializeFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new FileInputStream(path));
         return deserializeInternal(scanner);
     }
 
     @Override
-    public List<Taxpayer> deserializeData(String data) {
+    public Taxpayer deserializeData(String data) {
         Scanner scanner = new Scanner(new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8)));
         return deserializeInternal(scanner);
     }
 
-    private List<Taxpayer> deserializeInternal(Scanner scanner) {
-        List<Taxpayer> taxpayers = new ArrayList<>();
-        Taxpayer currentTaxpayer = null;
+    private Taxpayer deserializeInternal(Scanner scanner) {
+        Taxpayer taxpayer = parseTaxpayer(scanner);
 
         while (scanner.hasNextLine()) {
             String fileLine = scanner.nextLine();
 
-            if (fileLine.isEmpty() || fileLine.startsWith("Receipts:")) {
+            if (fileLine.isEmpty() || fileLine.contains("Receipts:")) {
                 continue;
             }
 
-            if (fileLine.startsWith("Name: ")) {
-                if (currentTaxpayer != null) {
-                    taxpayers.add(currentTaxpayer);
-                }
-
-                currentTaxpayer = parseTaxpayer(fileLine, scanner);
-                continue;
-            }
-
-            if (currentTaxpayer != null) {
-                currentTaxpayer.addReceiptToList(parseReceipt(fileLine, scanner));
-            }
+            taxpayer.addReceiptToList(parseReceipt(fileLine, scanner));
         }
 
-        if (currentTaxpayer != null && !taxpayers.contains(currentTaxpayer)) {
-            taxpayers.add(currentTaxpayer);
-        }
-
-       return taxpayers;
+        return taxpayer;
     }
 
-    private Taxpayer parseTaxpayer(String firstLine, Scanner scanner) {
-        String taxpayerName = getParameterValueFromTxtFileLine(firstLine, "Name: ");
+    private Taxpayer parseTaxpayer(Scanner scanner) {
+        String taxpayerName = getParameterValueFromTxtFileLine(scanner.nextLine(), "Name: ");
         String taxpayerAFM = getParameterValueFromTxtFileLine(scanner.nextLine(), "AFM: ");
         String taxpayerStatus = getParameterValueFromTxtFileLine(scanner.nextLine(), "Status: ");
         String taxpayerIncome = getParameterValueFromTxtFileLine(scanner.nextLine(), "Income: ");
 
-        return new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.valueOf(taxpayerStatus), Double.parseDouble(taxpayerIncome));
+        return new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.getEnum(taxpayerStatus), Double.parseDouble(taxpayerIncome));
     }
 
     private Receipt parseReceipt(String firstLine, Scanner scanner) {
-        String receiptID = getParameterValueFromTxtFileLine(firstLine, "receipts ID: ");
+        String receiptID = getParameterValueFromTxtFileLine(firstLine, "Receipt ID: ");
         String receiptDate = getParameterValueFromTxtFileLine(scanner.nextLine(), "Date: ");
         String receiptKind = getParameterValueFromTxtFileLine(scanner.nextLine(), "Kind: ");
         String receiptAmount = getParameterValueFromTxtFileLine(scanner.nextLine(), "Amount: ");
@@ -78,7 +60,7 @@ public class TxtDeserializer implements Deserializer {
         String receiptStreet = getParameterValueFromTxtFileLine(scanner.nextLine(), "Street: ");
         String receiptNumber = getParameterValueFromTxtFileLine(scanner.nextLine(), "Number: ");
 
-        return new Receipt(ReceiptKind.valueOf(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+        return new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
     }
 
     private static String getParameterValueFromTxtFileLine(String fileLine, String parameterName){
