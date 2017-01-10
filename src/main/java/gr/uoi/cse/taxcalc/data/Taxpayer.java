@@ -72,15 +72,14 @@ public class Taxpayer {
         Double[] perc = incomeTaxPercentages.get(familyStatus);
 
         for (int i = 1; i < bounds.length; ++i) {
-            if (income >= bounds[i] && i < bounds.length - 1) {
+            if (income >= bounds[i]) {
                 continue;
             }
 
             return calculateBaseTax(i - 1) + (perc[i] * (income - bounds[i - 1]));
         }
 
-        // This should never happen.
-        return 0.0;
+        return calculateBaseTax(4) + (perc[4] * (income - bounds[4]));
     }
 
     public String toString() {
