@@ -9,15 +9,15 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class ReceiptManagementDialog extends JDialog {
+class ReceiptManagementDialog extends JDialog {
     private Taxpayer loadedTaxpayer;
+
     private JList<String> receiptList;
     private JButton addReceiptButton;
     private JButton deleteReceiptButton;
     private JButton showReceiptDetailsButton;
 
-
-    public ReceiptManagementDialog(Taxpayer taxpayer) {
+    ReceiptManagementDialog(Taxpayer taxpayer) {
         setResizable(false);
         setBounds(100, 100, 480, 460);
         getContentPane().setLayout(null);
