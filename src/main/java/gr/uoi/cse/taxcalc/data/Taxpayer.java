@@ -48,7 +48,7 @@ public class Taxpayer {
         taxIncrease = 0;
         taxDecrease = 0;
 
-        receipts = new ArrayList<Receipt>();
+        receipts = new ArrayList<>();
     }
 
     private void setBasicTaxBasedOnFamilyStatus() {
@@ -68,7 +68,7 @@ public class Taxpayer {
         return ((bounds[index] - bounds[index - 1]) * perc[index - 1]) + calculateBaseTax(index - 1);
     }
 
-    double calculateTax() {
+    private double calculateTax() {
         Double[] bounds = incomeBoundaries.get(familyStatus);
         Double[] perc = incomeTaxPercentages.get(familyStatus);
 
@@ -83,14 +83,25 @@ public class Taxpayer {
         return calculateBaseTax(4) + (perc[4] * (income - bounds[4]));
     }
 
-    public String toString() {
-        return "Name: " + name
-                + "\nAFM: " + afm
-                + "\nStatus: " + familyStatus
-                + "\nIncome: " + String.format("%.2f", income)
-                + "\nBasicTax: " + String.format("%.2f", basicTax)
-                + "\nTaxIncrease: " + String.format("%.2f", taxIncrease)
-                + "\nTaxDecrease: " + String.format("%.2f", taxDecrease);
+    private void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
+        double totalReceiptsAmount = 0;
+        for (Receipt receipt : receipts) {
+            totalReceiptsAmount += receipt.getAmount();
+        }
+
+        taxIncrease = 0;
+        taxDecrease = 0;
+        if ((totalReceiptsAmount / (double) income) < 0.2) {
+            taxIncrease = basicTax * 0.08;
+        } else if ((totalReceiptsAmount / (double) income) < 0.4) {
+            taxIncrease = basicTax * 0.04;
+        } else if ((totalReceiptsAmount / (double) income) < 0.6) {
+            taxDecrease = basicTax * 0.15;
+        } else {
+            taxDecrease = basicTax * 0.30;
+        }
+
+        totalTax = basicTax + taxIncrease - taxDecrease;
     }
 
     public Receipt getReceipt(int receiptID) {
@@ -154,7 +165,7 @@ public class Taxpayer {
         return (new BigDecimal(basicTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
-    public double getTaxInxrease() {
+    public double getTaxIncrease() {
         return (new BigDecimal(taxIncrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
@@ -177,25 +188,13 @@ public class Taxpayer {
 
         calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
     }
-
-    private void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
-        double totalReceiptsAmount = 0;
-        for (Receipt receipt : receipts) {
-            totalReceiptsAmount += receipt.getAmount();
-        }
-
-        taxIncrease = 0;
-        taxDecrease = 0;
-        if ((totalReceiptsAmount / (double) income) < 0.2) {
-            taxIncrease = basicTax * 0.08;
-        } else if ((totalReceiptsAmount / (double) income) < 0.4) {
-            taxIncrease = basicTax * 0.04;
-        } else if ((totalReceiptsAmount / (double) income) < 0.6) {
-            taxDecrease = basicTax * 0.15;
-        } else {
-            taxDecrease = basicTax * 0.30;
-        }
-
-        totalTax = basicTax + taxIncrease - taxDecrease;
+    public String toString() {
+        return "Name: " + name
+                + "\nAFM: " + afm
+                + "\nStatus: " + familyStatus
+                + "\nIncome: " + String.format("%.2f", income)
+                + "\nBasicTax: " + String.format("%.2f", basicTax)
+                + "\nTaxIncrease: " + String.format("%.2f", taxIncrease)
+                + "\nTaxDecrease: " + String.format("%.2f", taxDecrease);
     }
 }

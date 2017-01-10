@@ -1,4 +1,4 @@
-package gr.uoi.cse.taxcalc.output;
+package gr.uoi.cse.taxcalc.io;
 
 import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
@@ -21,7 +21,8 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
-public class OutputSystem {
+@Deprecated
+public class OutputSystemLegacy {
 	
 	public static void saveUpdatedTaxpayerTxtInputFile(String filePath, int taxpayerIndex){
 		PrintWriter outputStream = null;
@@ -130,8 +131,8 @@ public class OutputSystem {
 		DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
 		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
 		
-		String taxVariationType = taxpayer.getTaxInxrease()!=0? "Tax Increase" : "Tax Decrease";
-		double taxVariationAmount = taxpayer.getTaxInxrease()!=0? taxpayer.getTaxInxrease() : taxpayer.getTaxDecrease()*(-1);
+		String taxVariationType = taxpayer.getTaxIncrease()!=0? "Tax Increase" : "Tax Decrease";
+		double taxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
 		
 		taxAnalysisBarChartDataset.setValue(taxpayer.getBasicTax(), "Tax", "Basic Tax");
 		taxAnalysisBarChartDataset.setValue(taxVariationAmount, "Tax", taxVariationType);
@@ -164,8 +165,8 @@ public class OutputSystem {
 		outputStream.println("AFM: "+taxpayer.getAFM());
 		outputStream.println("Income: "+taxpayer.getIncome());
 		outputStream.println("Basic Tax: "+taxpayer.getBasicTax());
-		if (taxpayer.getTaxInxrease()!=0){
-			outputStream.println("Tax Increase: "+taxpayer.getTaxInxrease());
+		if (taxpayer.getTaxIncrease()!=0){
+			outputStream.println("Tax Increase: "+taxpayer.getTaxIncrease());
 		}else{
 			outputStream.println("Tax Decrease: "+taxpayer.getTaxDecrease());
 		}
@@ -199,8 +200,8 @@ public class OutputSystem {
 		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
 		outputStream.println("<Income> "+taxpayer.getIncome()+" </Income>");
 		outputStream.println("<BasicTax> "+taxpayer.getBasicTax()+" </BasicTax>");
-		if (taxpayer.getTaxInxrease()!=0){
-			outputStream.println("<TaxIncrease> "+taxpayer.getTaxInxrease()+" </TaxIncrease>");
+		if (taxpayer.getTaxIncrease()!=0){
+			outputStream.println("<TaxIncrease> "+taxpayer.getTaxIncrease()+" </TaxIncrease>");
 		}else{
 			outputStream.println("<TaxDecrease> "+taxpayer.getTaxDecrease()+" </TaxDecrease>");
 		}

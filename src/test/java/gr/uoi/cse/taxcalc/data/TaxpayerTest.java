@@ -37,7 +37,7 @@ public class TaxpayerTest {
         taxpayer.addReceiptToList(new Receipt(ReceiptKind.ENTERTAINMENT, "a", "b", 100.0, "c", "d", "e", "f", "g"));
 
         assertEquals(taxpayer.getBasicTax(), 5604.3, Math.ulp(1.0));
-        assertEquals(taxpayer.getTaxInxrease(), 448.34, Math.ulp(1.0));
+        assertEquals(taxpayer.getTaxIncrease(), 448.34, Math.ulp(1.0));
     }
 
     @Test

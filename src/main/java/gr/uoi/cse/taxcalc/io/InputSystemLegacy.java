@@ -1,4 +1,4 @@
-package gr.uoi.cse.taxcalc.input;
+package gr.uoi.cse.taxcalc.io;
 
 import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.data.FamilyStatus;
@@ -11,7 +11,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-public class InputSystem {
+@Deprecated
+public class InputSystemLegacy {
 	
 	public static void addTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
 		for (String afmInfoFile : taxpayersAfmInfoFiles)
