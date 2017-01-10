@@ -2,17 +2,25 @@ package gr.uoi.cse.taxcalc.gui.dialogs;
 
 import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.data.Taxpayer;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
 import gr.uoi.cse.taxcalc.gui.GUIUtils;
 import gr.uoi.cse.taxcalc.io.ExportFormat;
 import gr.uoi.cse.taxcalc.io.OutputSystem;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class TaxpayersDialog extends JDialog {
     private JList<String> taxpayerList;
@@ -135,9 +143,8 @@ public class TaxpayersDialog extends JDialog {
                 return;
             }
 
-            // TODO
-            /*int taxpayerIndex = taxpayerList.getSelectedIndex();
-            OutputSystem.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);*/
+            Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerList.getSelectedIndex());
+            showTaxpayerPieChart(taxpayer);
         });
     }
 
@@ -148,9 +155,8 @@ public class TaxpayersDialog extends JDialog {
                 return;
             }
 
-            // TODO
-            /*int taxpayerIndex = taxpayerList.getSelectedIndex();
-            OutputSystem.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);*/
+            Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerList.getSelectedIndex());
+            showTaxpayerBarChart(taxpayer);
         });
     }
 
@@ -212,5 +218,45 @@ public class TaxpayersDialog extends JDialog {
         }
 
         taxpayerList.setModel(listModel);
+    }
+
+    private void showTaxpayerPieChart(Taxpayer taxpayer) {
+        DefaultPieDataset pieChartDataset = new DefaultPieDataset();
+
+        pieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmount(ReceiptKind.BASIC));
+        pieChartDataset.setValue("Entertainment", taxpayer.getReceiptsTotalAmount(ReceiptKind.ENTERTAINMENT));
+        pieChartDataset.setValue("Travel", taxpayer.getReceiptsTotalAmount(ReceiptKind.TRAVEL));
+        pieChartDataset.setValue("Health", taxpayer.getReceiptsTotalAmount(ReceiptKind.HEALTH));
+        pieChartDataset.setValue("Other", taxpayer.getReceiptsTotalAmount(ReceiptKind.OTHER));
+
+        JFreeChart pieChart = ChartFactory.createPieChart("Receipt Pie Chart", pieChartDataset);
+        PiePlot piePlot = (PiePlot) pieChart.getPlot();
+        PieSectionLabelGenerator generator = new StandardPieSectionLabelGenerator("{0}: {1}$ ({2})", new DecimalFormat("0.00"), new DecimalFormat("0.00%"));
+        piePlot.setLabelGenerator(generator);
+
+        showChartFrame(taxpayer.getName() + " | " + taxpayer.getAFM(), pieChart);
+    }
+
+    private void showTaxpayerBarChart(Taxpayer taxpayer) {
+        DefaultCategoryDataset barChartDataset = new DefaultCategoryDataset();
+
+        String taxVariationType = taxpayer.getTaxIncrease() != 0 ? "Tax Increase" : "Tax Decrease";
+        double taxVariationAmount = taxpayer.getTaxIncrease() != 0 ? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease() * (-1);
+
+        barChartDataset.setValue(taxpayer.getBasicTax(), "Tax", "Basic Tax");
+        barChartDataset.setValue(taxVariationAmount, "Tax", taxVariationType);
+        barChartDataset.setValue(taxpayer.getTotalTax(), "Tax", "Total Tax");
+
+        JFreeChart barChart = ChartFactory.createBarChart("Tax Analysis Bar Chart", "", "Tax Analysis in $", barChartDataset, PlotOrientation.VERTICAL, true, true, false);
+        showChartFrame(taxpayer.getName() + " | " + taxpayer.getAFM(), barChart);
+    }
+
+    private void showChartFrame(String title, JFreeChart chart) {
+        ChartFrame chartFrame = new ChartFrame(title, chart);
+        chartFrame.pack();
+        chartFrame.setResizable(false);
+        chartFrame.setLocationRelativeTo(null);
+        chartFrame.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
+        chartFrame.setVisible(true);
     }
 }
