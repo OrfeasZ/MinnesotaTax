@@ -17,7 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
-import gr.uoi.cse.taxcalc.data.receipts.ReceiptFactory;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
 
 public class InsertNewReceiptJDialog extends JDialog {
 
@@ -187,8 +187,8 @@ public class InsertNewReceiptJDialog extends JDialog {
 						&& !amountTextField.getText().equals("") && !companyTextField.getText().equals("") && !countryTextField.getText().equals("")
 						&& !cityTextField.getText().equals("") && !streetTextField.getText().equals("") && !numberTextField.getText().equals("")){
 
-					Receipt newReceipt = ReceiptFactory.createNewReceipt(kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
-							dateTextField.getText(), amountTextField.getText(), companyTextField.getText(),
+					Receipt newReceipt = new Receipt(ReceiptKind.valueOf(kindComboBox.getSelectedItem().toString()), receiptIdTextField.getText(),
+							dateTextField.getText(), Double.parseDouble(amountTextField.getText()), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
 					Database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);
 					

@@ -3,8 +3,9 @@ package gr.uoi.cse.taxcalc.input;
 import gr.uoi.cse.taxcalc.data.Database;
 import gr.uoi.cse.taxcalc.data.FamilyStatus;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
-import gr.uoi.cse.taxcalc.data.receipts.ReceiptFactory;
 import gr.uoi.cse.taxcalc.data.Taxpayer;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -58,7 +59,7 @@ public class InputSystem {
 			String receiptCity = getParameterValueFromTxtFileLine(inputStream.nextLine(), "City: ");
 			String receiptStreet = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Street: ");
 			String receiptNumber = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Number: ");
-			Receipt newReceipt = ReceiptFactory.createNewReceipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+			Receipt newReceipt = new Receipt(ReceiptKind.valueOf(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 			
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
@@ -105,7 +106,7 @@ public class InputSystem {
 			String receiptCity = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<City> ", " </City>");
 			String receiptStreet = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Street> ", " </Street>");
 			String receiptNumber = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Number> ", " </Number>");
-			Receipt newReceipt = ReceiptFactory.createNewReceipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+			Receipt newReceipt = new Receipt(ReceiptKind.valueOf(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 			
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
