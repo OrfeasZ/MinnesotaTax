@@ -1,6 +1,6 @@
 package gr.uoi.cse.taxcalc.data.receipts;
 
-public class BasicReceipt extends Receipt{
+public class BasicReceipt extends Receipt {
 	private final String kind = "Basic";
 	
 	public BasicReceipt(String id, String date, String amount, String name, String country, String city, String street, String number){
