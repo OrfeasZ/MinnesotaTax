@@ -37,7 +37,7 @@ public class XmlSerializer extends Serializer {
         // Add the Receipts.
         Element receiptsElement = dom.createElement("Receipts");
 
-        for (Receipt receipt : taxpayer.getReceiptsArrayList()) {
+        for (Receipt receipt : taxpayer.getReceipts()) {
             addReceipt(receipt, receiptsElement);
         }
 

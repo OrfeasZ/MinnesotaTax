@@ -19,7 +19,7 @@ public class TxtSerializer extends Serializer {
     public void serializeFull(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
         serializeTaxpayer(taxpayer, writer);
 
-        if (taxpayer.getReceiptsArrayList().size() == 0) {
+        if (taxpayer.getReceipts().size() == 0) {
             return;
         }
 
@@ -27,7 +27,7 @@ public class TxtSerializer extends Serializer {
         writeLine("Receipts:", writer);
         writeLine(writer);
 
-        for (Receipt receipt : taxpayer.getReceiptsArrayList()) {
+        for (Receipt receipt : taxpayer.getReceipts()) {
             serializeReceipt(receipt, writer);
         }
     }

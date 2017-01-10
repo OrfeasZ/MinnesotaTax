@@ -47,7 +47,7 @@ public class TaxpayersDialog extends JDialog {
 
         showTaxpayerInfoButton = GUIUtils.addButton(getContentPane(), "<html>Εμφάνιση στοιχείων<br>επιλεγμένου φορολογούμενου</html>", new Rectangle(300, 12, 240, 71));
         deleteTaxpayerButton = GUIUtils.addButton(getContentPane(), "<html>Διαγραφή επιλεγμένου<br>φορολογούμενου</html>", new Rectangle(300, 93, 240, 71));
-        showTaxpayerReceiptsButton = GUIUtils.addButton(getContentPane(), "<html>Εμφάνιση αποδείξεων<br>πιλεγμένου φορολογούμενου</html>", new Rectangle(300, 175, 240, 71));
+        showTaxpayerReceiptsButton = GUIUtils.addButton(getContentPane(), "<html>Εμφάνιση αποδείξεων<br>επιλεγμένου φορολογούμενου</html>", new Rectangle(300, 175, 240, 71));
         showPieChartButton = GUIUtils.addButton(getContentPane(), "Διάγραμμα πίτας αποδείξεων", new Rectangle(300, 257, 240, 71));
         showBarChartButton = GUIUtils.addButton(getContentPane(), "Ραβδόγραμμα ανάλυσης φόρου", new Rectangle(300, 340, 240, 71));
         saveInfoTxtButton = GUIUtils.addButton(getContentPane(), "Αποθήκευση στοιχείων φορολογούμενου σε txt", new Rectangle(10, 422, 530, 29));
@@ -103,10 +103,8 @@ public class TaxpayersDialog extends JDialog {
                 return;
             }
 
-            // TODO
-            /*TaxpayerReceiptsManagementJDialog taxpayerReceiptsManagementJDialog = new TaxpayerReceiptsManagementJDialog(taxpayerList.getSelectedValue().toString(), taxpayerList.getSelectedIndex());
-            taxpayerReceiptsManagementJDialog.fillTaxpayerReceiptsJList();
-            taxpayerReceiptsManagementJDialog.setVisible(true);*/
+            ReceiptManagementDialog receiptManagementDialog = new ReceiptManagementDialog(Database.getTaxpayerByIndex(taxpayerList.getSelectedIndex()));
+            receiptManagementDialog.setVisible(true);
         });
     }
 

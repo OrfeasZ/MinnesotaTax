@@ -108,7 +108,7 @@ public class Taxpayer {
         return receipts.get(receiptID);
     }
 
-    public ArrayList<Receipt> getReceiptsArrayList() {
+    public ArrayList<Receipt> getReceipts() {
         return receipts;
     }
 
