@@ -90,7 +90,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 						}
 
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
-						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
+						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayerCount()));
 						
 						dispose();
 					}

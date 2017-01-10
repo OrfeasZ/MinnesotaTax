@@ -35,7 +35,7 @@ public class OutputSystemLegacy {
 			System.out.println("Problem opening: "+filePath);
 		}
 		
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerIndex);
 		outputStream.println("Name: "+taxpayer.getName());
 		outputStream.println("AFM: "+taxpayer.getAFM());
 		outputStream.println("Status: "+taxpayer.getFamilyStatus());
@@ -74,7 +74,7 @@ public class OutputSystemLegacy {
 			System.out.println("Problem opening: "+filePath);
 		}
 		
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerIndex);
 		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
 		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
 		outputStream.println("<Status> "+taxpayer.getFamilyStatus()+" </Status>");
@@ -106,7 +106,7 @@ public class OutputSystemLegacy {
 	
 	public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
 		DefaultPieDataset receiptPieChartDataset = new DefaultPieDataset();
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerIndex);
 		
 		receiptPieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmount(ReceiptKind.BASIC));
 		receiptPieChartDataset.setValue("Entertainment", taxpayer.getReceiptsTotalAmount(ReceiptKind.ENTERTAINMENT));
@@ -129,7 +129,7 @@ public class OutputSystemLegacy {
 	
 	public static void createTaxpayerTaxAnalysisBarJFreeChart(int taxpayerIndex){
 		DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerIndex);
 		
 		String taxVariationType = taxpayer.getTaxIncrease()!=0? "Tax Increase" : "Tax Decrease";
 		double taxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
@@ -149,7 +149,7 @@ public class OutputSystemLegacy {
 	}
 	
 	public static void saveTaxpayerInfoToTxtLogFile(String folderSavePath, int taxpayerIndex){
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerIndex);
 		
 		PrintWriter outputStream = null;
 		try
@@ -184,7 +184,7 @@ public class OutputSystemLegacy {
 	}
 	
 	public static void saveTaxpayerInfoToXmlLogFile(String folderSavePath, int taxpayerIndex){
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = Database.getTaxpayerByIndex(taxpayerIndex);
 		
 		PrintWriter outputStream = null;
 		try
