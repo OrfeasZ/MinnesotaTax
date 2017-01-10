@@ -2,6 +2,7 @@ package gr.uoi.cse.taxcalc.io.serializers;
 
 import gr.uoi.cse.taxcalc.data.Taxpayer;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
+import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -10,7 +11,12 @@ import java.io.Writer;
 
 public class TxtSerializer extends Serializer {
     @Override
-    void serialize(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
+    public String getExtension() {
+        return "txt";
+    }
+
+    @Override
+    public void serializeFull(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
         serializeTaxpayer(taxpayer, writer);
 
         if (taxpayer.getReceiptsArrayList().size() == 0) {
@@ -24,6 +30,28 @@ public class TxtSerializer extends Serializer {
         for (Receipt receipt : taxpayer.getReceiptsArrayList()) {
             serializeReceipt(receipt, writer);
         }
+    }
+
+    @Override
+    public void serializeInfo(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
+        writeLine("Name: " + taxpayer.getName(), writer);
+        writeLine("AFM: " + taxpayer.getAFM(), writer);
+        writeLine("Income: " + taxpayer.getIncome(), writer);
+        writeLine("Basic Tax: " + taxpayer.getBasicTax(), writer);
+
+        if (taxpayer.getTaxIncrease() != 0) {
+            writeLine("Tax Increase: " + taxpayer.getTaxIncrease(), writer);
+        } else {
+            writeLine("Tax Decrease: " + taxpayer.getTaxDecrease(), writer);
+        }
+
+        writeLine("Total Tax: " + taxpayer.getTotalTax(), writer);
+        writeLine("Total Receipts Amount: " + taxpayer.getTotalReceiptsAmount(), writer);
+        writeLine("Entertainment: " + taxpayer.getReceiptsTotalAmount(ReceiptKind.ENTERTAINMENT), writer);
+        writeLine("Basic: " + taxpayer.getReceiptsTotalAmount(ReceiptKind.BASIC), writer);
+        writeLine("Travel: " + taxpayer.getReceiptsTotalAmount(ReceiptKind.TRAVEL), writer);
+        writeLine("Health: " + taxpayer.getReceiptsTotalAmount(ReceiptKind.HEALTH), writer);
+        writeLine("Other: " + taxpayer.getReceiptsTotalAmount(ReceiptKind.OTHER), writer);
     }
 
     private void serializeTaxpayer(Taxpayer taxpayer, Writer writer) throws IOException {
