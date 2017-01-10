@@ -81,8 +81,14 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 					confirmDialogText += "Είστε σίγουρος?";
 					
 					int dialogResult = JOptionPane.showConfirmDialog (null, confirmDialogText, "Επιβεβαίωση", JOptionPane.YES_NO_OPTION);
-					if(dialogResult == JOptionPane.YES_OPTION){
-						Database.proccessTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
+
+					if (dialogResult == JOptionPane.YES_OPTION){
+						try {
+							Database.proccessTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Η φόρτωση των δεδομένων απέτυχε.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
+						}
+
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
 						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
 						

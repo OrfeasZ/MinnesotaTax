@@ -2,8 +2,12 @@ package gr.uoi.cse.taxcalc.data;
 
 import gr.uoi.cse.taxcalc.io.InputSystem;
 import gr.uoi.cse.taxcalc.io.OutputSystem;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +23,16 @@ public class Database {
 		return Database.taxpayersInfoFilesPath;
 	}
 	
-	public static void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
-		InputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
+	public static void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles) throws IOException, SAXException, ParserConfigurationException {
+		InputSystem.importTaxpayers(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
 	}
 	
-	public static void addTaxpayerToList(Taxpayer taxpayer){
+	public static void addTaxpayer(Taxpayer taxpayer){
 		taxpayersArrayList.add(taxpayer);
+	}
+
+	public static void addTaxpayers(List<Taxpayer> taxpayers) {
+		taxpayersArrayList.addAll(taxpayers);
 	}
 	
 	public static int getTaxpayersArrayListSize(){
