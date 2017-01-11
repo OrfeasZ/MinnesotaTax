@@ -14,14 +14,24 @@ import java.io.Writer;
 import java.nio.file.Paths;
 
 public class OutputSystem {
-    public static void exportTaxpayerFull(Taxpayer taxpayer, String folder) throws IOException, TransformerException, ParserConfigurationException {
+    public static void exportTaxpayerFull(final Taxpayer taxpayer,
+                                          final String folder)
+            throws IOException,
+            TransformerException,
+            ParserConfigurationException {
         exportTaxpayerFull(taxpayer, folder, ExportFormat.TXT);
         exportTaxpayerFull(taxpayer, folder, ExportFormat.XML);
     }
 
-    public static void exportTaxpayerFull(Taxpayer taxpayer, String folder, ExportFormat format) throws IOException, TransformerException, ParserConfigurationException {
+    public static void exportTaxpayerFull(final Taxpayer taxpayer,
+                                          final String folder,
+                                          final ExportFormat format)
+            throws IOException,
+            TransformerException,
+            ParserConfigurationException {
         Serializer serializer = createSerializer(format);
-        File outFile = Paths.get(folder, taxpayer.getAFM() + "_INFO." + serializer.getExtension()).toFile();
+        File outFile = Paths.get(folder, taxpayer.getAFM()
+                + "_INFO." + serializer.getExtension()).toFile();
 
         if (!outFile.exists()) {
             return;
@@ -32,22 +42,34 @@ public class OutputSystem {
         writer.close();
     }
 
-    public static void exportTaxpayerInfo(Taxpayer taxpayer, String folder, ExportFormat format) throws IOException, TransformerException, ParserConfigurationException {
+    public static void exportTaxpayerInfo(final Taxpayer taxpayer,
+                                          final String folder,
+                                          final ExportFormat format)
+            throws IOException,
+            TransformerException,
+            ParserConfigurationException {
         Serializer serializer = createSerializer(format);
-        Writer writer = new FileWriter(Paths.get(folder, taxpayer.getAFM() + "_LOG." + serializer.getExtension()).toFile());
+
+        Writer writer = new FileWriter(
+                Paths.get(folder,
+                        taxpayer.getAFM() + "_LOG."
+                                + serializer.getExtension()).toFile()
+        );
+
         serializer.serializeInfo(taxpayer, writer);
         writer.close();
     }
 
-    private static Serializer createSerializer(ExportFormat format) {
+    private static Serializer createSerializer(final ExportFormat format) {
         switch (format) {
             case TXT:
                 return new TxtSerializer();
 
             case XML:
                 return new XmlSerializer();
-        }
 
-        throw new IllegalArgumentException();
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }

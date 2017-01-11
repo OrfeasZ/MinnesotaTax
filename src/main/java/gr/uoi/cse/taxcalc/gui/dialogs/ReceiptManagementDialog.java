@@ -4,8 +4,17 @@ import gr.uoi.cse.taxcalc.data.Taxpayer;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import gr.uoi.cse.taxcalc.gui.GUIUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,7 +26,7 @@ class ReceiptManagementDialog extends JDialog {
     private JButton deleteReceiptButton;
     private JButton showReceiptDetailsButton;
 
-    ReceiptManagementDialog(Taxpayer taxpayer) {
+    ReceiptManagementDialog(final Taxpayer taxpayer) {
         setResizable(false);
         setBounds(100, 100, 480, 460);
         getContentPane().setLayout(null);

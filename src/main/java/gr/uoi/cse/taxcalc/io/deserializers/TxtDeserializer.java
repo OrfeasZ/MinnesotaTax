@@ -13,18 +13,22 @@ import java.util.Scanner;
 
 public class TxtDeserializer implements Deserializer {
     @Override
-    public Taxpayer deserializeFile(String path) throws FileNotFoundException {
+    public Taxpayer deserializeFile(final String path)
+            throws FileNotFoundException {
         Scanner scanner = new Scanner(new FileInputStream(path));
         return deserializeInternal(scanner);
     }
 
     @Override
-    public Taxpayer deserializeData(String data) {
-        Scanner scanner = new Scanner(new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8)));
+    public Taxpayer deserializeData(final String data) {
+        Scanner scanner = new Scanner(
+                new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8))
+        );
+
         return deserializeInternal(scanner);
     }
 
-    private Taxpayer deserializeInternal(Scanner scanner) {
+    private Taxpayer deserializeInternal(final Scanner scanner) {
         Taxpayer taxpayer = parseTaxpayer(scanner);
 
         while (scanner.hasNextLine()) {
@@ -40,30 +44,47 @@ public class TxtDeserializer implements Deserializer {
         return taxpayer;
     }
 
-    private Taxpayer parseTaxpayer(Scanner scanner) {
-        String taxpayerName = getParameterValueFromTxtFileLine(scanner.nextLine(), "Name: ");
-        String taxpayerAFM = getParameterValueFromTxtFileLine(scanner.nextLine(), "AFM: ");
-        String taxpayerStatus = getParameterValueFromTxtFileLine(scanner.nextLine(), "Status: ");
-        String taxpayerIncome = getParameterValueFromTxtFileLine(scanner.nextLine(), "Income: ");
+    private Taxpayer parseTaxpayer(final Scanner scanner) {
+        String taxpayerName = getParamValue(scanner.nextLine(), "Name: ");
+        String taxpayerAFM = getParamValue(scanner.nextLine(), "AFM: ");
+        String taxpayerStatus = getParamValue(scanner.nextLine(), "Status: ");
+        String taxpayerIncome = getParamValue(scanner.nextLine(), "Income: ");
 
-        return new Taxpayer(taxpayerName, taxpayerAFM, FamilyStatus.getEnum(taxpayerStatus), Double.parseDouble(taxpayerIncome));
+        return new Taxpayer(
+                taxpayerName,
+                taxpayerAFM,
+                FamilyStatus.getEnum(taxpayerStatus),
+                Double.parseDouble(taxpayerIncome)
+        );
     }
 
-    private Receipt parseReceipt(String firstLine, Scanner scanner) {
-        String receiptID = getParameterValueFromTxtFileLine(firstLine, "Receipt ID: ");
-        String receiptDate = getParameterValueFromTxtFileLine(scanner.nextLine(), "Date: ");
-        String receiptKind = getParameterValueFromTxtFileLine(scanner.nextLine(), "Kind: ");
-        String receiptAmount = getParameterValueFromTxtFileLine(scanner.nextLine(), "Amount: ");
-        String receiptCompany = getParameterValueFromTxtFileLine(scanner.nextLine(), "Company: ");
-        String receiptCountry = getParameterValueFromTxtFileLine(scanner.nextLine(), "Country: ");
-        String receiptCity = getParameterValueFromTxtFileLine(scanner.nextLine(), "City: ");
-        String receiptStreet = getParameterValueFromTxtFileLine(scanner.nextLine(), "Street: ");
-        String receiptNumber = getParameterValueFromTxtFileLine(scanner.nextLine(), "Number: ");
+    private Receipt parseReceipt(final String firstLine,
+                                 final Scanner scanner) {
+        String receiptID = getParamValue(firstLine, "Receipt ID: ");
+        String receiptDate = getParamValue(scanner.nextLine(), "Date: ");
+        String receiptKind = getParamValue(scanner.nextLine(), "Kind: ");
+        String receiptAmount = getParamValue(scanner.nextLine(), "Amount: ");
+        String receiptCompany = getParamValue(scanner.nextLine(), "Company: ");
+        String receiptCountry = getParamValue(scanner.nextLine(), "Country: ");
+        String receiptCity = getParamValue(scanner.nextLine(), "City: ");
+        String receiptStreet = getParamValue(scanner.nextLine(), "Street: ");
+        String receiptNumber = getParamValue(scanner.nextLine(), "Number: ");
 
-        return new Receipt(ReceiptKind.getEnum(receiptKind), receiptID, receiptDate, Double.parseDouble(receiptAmount), receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+        return new Receipt(
+                ReceiptKind.getEnum(receiptKind),
+                receiptID,
+                receiptDate,
+                Double.parseDouble(receiptAmount),
+                receiptCompany,
+                receiptCountry,
+                receiptCity,
+                receiptStreet,
+                receiptNumber
+        );
     }
 
-    private String getParameterValueFromTxtFileLine(String fileLine, String parameterName) {
+    private String getParamValue(final String fileLine,
+                                 final String parameterName) {
         return fileLine.substring(parameterName.length(), fileLine.length());
     }
 }

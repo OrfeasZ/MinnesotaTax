@@ -2,10 +2,10 @@ package gr.uoi.cse.taxcalc;
 
 import gr.uoi.cse.taxcalc.gui.frames.MainFrame;
 
-import java.awt.*;
+import java.awt.EventQueue;
 
 public class Entry {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         EventQueue.invokeLater(() -> {
             try {
                 MainFrame frame = new MainFrame();

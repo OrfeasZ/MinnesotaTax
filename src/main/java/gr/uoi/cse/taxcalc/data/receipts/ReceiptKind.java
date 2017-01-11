@@ -7,7 +7,7 @@ public enum ReceiptKind {
     HEALTH("Health"),
     OTHER("Other");
 
-    public static ReceiptKind getEnum(String name) {
+    public static ReceiptKind getEnum(final String name) {
         for (ReceiptKind kind : values()) {
             if (kind.toString().equalsIgnoreCase(name)) {
                 return kind;
@@ -19,7 +19,7 @@ public enum ReceiptKind {
 
     private String displayName;
 
-    ReceiptKind(String name) {
+    ReceiptKind(final String name) {
         displayName = name;
     }
 

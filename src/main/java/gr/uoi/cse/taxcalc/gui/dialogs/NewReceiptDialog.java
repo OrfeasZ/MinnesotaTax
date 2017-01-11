@@ -5,8 +5,16 @@ import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
 import gr.uoi.cse.taxcalc.gui.GUIUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -80,11 +88,11 @@ class NewReceiptDialog extends JDialog {
     private void setAmountHandler() {
         amountField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent keyEvent) {
+            public void keyTyped(final KeyEvent keyEvent) {
                 char charTyped = keyEvent.getKeyChar();
 
-                if ((!Character.isDigit(charTyped) && charTyped != '.') ||
-                        (charTyped == '.' && amountField.getText().contains("."))) {
+                if ((!Character.isDigit(charTyped) && charTyped != '.')
+                        || (charTyped == '.' && amountField.getText().contains("."))) {
                     keyEvent.consume();
                 }
             }
@@ -93,14 +101,14 @@ class NewReceiptDialog extends JDialog {
 
     private void setOkHandler() {
         okButton.addActionListener(e -> {
-            if (receiptIdField.getText().isEmpty() ||
-                    dateField.getText().isEmpty() ||
-                    amountField.getText().isEmpty() ||
-                    companyField.getText().isEmpty() ||
-                    countryField.getText().isEmpty() ||
-                    cityField.getText().isEmpty() ||
-                    streetField.getText().isEmpty() ||
-                    numberField.getText().isEmpty()) {
+            if (receiptIdField.getText().isEmpty()
+                    || dateField.getText().isEmpty()
+                    || amountField.getText().isEmpty()
+                    || companyField.getText().isEmpty()
+                    || countryField.getText().isEmpty()
+                    || cityField.getText().isEmpty()
+                    || streetField.getText().isEmpty()
+                    || numberField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Υπάρχουν μη συμπληρωμένα πεδία", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
                 return;
             }

@@ -16,7 +16,10 @@ public class XmlSerializer extends Serializer {
     }
 
     @Override
-    public void serializeFull(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
+    public void serializeFull(final Taxpayer taxpayer, final Writer writer)
+            throws ParserConfigurationException,
+            TransformerException,
+            IOException {
         serializeTaxpayer(taxpayer, writer);
 
         if (taxpayer.getReceipts().size() == 0) {
@@ -35,7 +38,10 @@ public class XmlSerializer extends Serializer {
     }
 
     @Override
-    public void serializeInfo(Taxpayer taxpayer, Writer writer) throws ParserConfigurationException, TransformerException, IOException {
+    public void serializeInfo(final Taxpayer taxpayer, final Writer writer)
+            throws ParserConfigurationException,
+            TransformerException,
+            IOException {
         writeLine("<Name> " + taxpayer.getName() + " </Name>", writer);
         writeLine("<AFM> " + taxpayer.getAFM() + " </AFM>", writer);
         writeLine("<Income> " + taxpayer.getIncome() + " </Income>", writer);
@@ -56,14 +62,16 @@ public class XmlSerializer extends Serializer {
         writeLine("<Other> " + taxpayer.getReceiptsTotalAmount(ReceiptKind.OTHER) + " </Other>", writer);
     }
 
-    private void serializeTaxpayer(Taxpayer taxpayer, Writer writer) throws IOException {
+    private void serializeTaxpayer(final Taxpayer taxpayer,
+                                   final Writer writer) throws IOException {
         writeLine("<Name> " + taxpayer.getName() + " </Name>", writer);
         writeLine("<AFM> " + taxpayer.getAFM() + " </AFM>", writer);
         writeLine("<Status> " + taxpayer.getFamilyStatus() + " </Status>", writer);
         writeLine("<Income> " + taxpayer.getIncome() + " </Income>", writer);
     }
 
-    private void serializeReceipt(Receipt receipt, Writer writer) throws IOException {
+    private void serializeReceipt(final Receipt receipt, final Writer writer)
+            throws IOException {
         writeLine("<ReceiptID> " + receipt.getId() + " </ReceiptID>", writer);
         writeLine("<Date> " + receipt.getDate() + " </Date>", writer);
         writeLine("<Kind> " + receipt.getKind() + " </Kind>", writer);
@@ -76,11 +84,12 @@ public class XmlSerializer extends Serializer {
         writeLine(writer);
     }
 
-    private void writeLine(Writer writer) throws IOException {
+    private void writeLine(final Writer writer) throws IOException {
         writer.append("\n");
     }
 
-    private void writeLine(String line, Writer writer) throws IOException {
+    private void writeLine(final String line, final Writer writer)
+            throws IOException {
         writer.append(line);
         writer.append("\n");
     }

@@ -9,23 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Taxpayer {
-    private static final Map<FamilyStatus, Double[]> incomeBoundaries;
-    private static final Map<FamilyStatus, Double[]> incomeTaxPercentages;
+    private static final Map<FamilyStatus, Double[]> IncomeBoundaries;
+    private static final Map<FamilyStatus, Double[]> IncomeTaxPercentages;
 
     static {
-        incomeBoundaries = new HashMap<>();
-        incomeBoundaries.put(FamilyStatus.MARRIED_JOINTLY, new Double[]{0.0, 36080.0, 90000.0, 143350.0, 25420.0});
-        incomeBoundaries.put(FamilyStatus.MARRIED_SEPARATELY, new Double[]{0.0, 18040.0, 71680.0, 90000.0, 127120.0});
-        incomeBoundaries.put(FamilyStatus.SINGLE, new Double[]{0.0, 24680.0, 81080.0, 90000.0, 152540.0});
-        incomeBoundaries.put(FamilyStatus.HOUSEHOLD_HEAD, new Double[]{0.0, 30390.0, 90000.0, 122110.0, 203390.0});
+        IncomeBoundaries = new HashMap<>();
+        IncomeBoundaries.put(FamilyStatus.MARRIED_JOINTLY, new Double[]{0.0, 36080.0, 90000.0, 143350.0, 25420.0});
+        IncomeBoundaries.put(FamilyStatus.MARRIED_SEPARATELY, new Double[]{0.0, 18040.0, 71680.0, 90000.0, 127120.0});
+        IncomeBoundaries.put(FamilyStatus.SINGLE, new Double[]{0.0, 24680.0, 81080.0, 90000.0, 152540.0});
+        IncomeBoundaries.put(FamilyStatus.HOUSEHOLD_HEAD, new Double[]{0.0, 30390.0, 90000.0, 122110.0, 203390.0});
     }
 
     static {
-        incomeTaxPercentages = new HashMap<>();
-        incomeTaxPercentages.put(FamilyStatus.MARRIED_JOINTLY, new Double[]{0.0535, 0.0705, 0.0705, 0.0785, 0.0985});
-        incomeTaxPercentages.put(FamilyStatus.MARRIED_SEPARATELY, new Double[]{0.0535, 0.0705, 0.0785, 0.0785, 0.0985});
-        incomeTaxPercentages.put(FamilyStatus.SINGLE, new Double[]{0.0535, 0.0705, 0.0785, 0.0785, 0.0985});
-        incomeTaxPercentages.put(FamilyStatus.HOUSEHOLD_HEAD, new Double[]{0.0535, 0.0705, 0.0705, 0.0785, 0.0985});
+        IncomeTaxPercentages = new HashMap<>();
+        IncomeTaxPercentages.put(FamilyStatus.MARRIED_JOINTLY, new Double[]{0.0535, 0.0705, 0.0705, 0.0785, 0.0985});
+        IncomeTaxPercentages.put(FamilyStatus.MARRIED_SEPARATELY, new Double[]{0.0535, 0.0705, 0.0785, 0.0785, 0.0985});
+        IncomeTaxPercentages.put(FamilyStatus.SINGLE, new Double[]{0.0535, 0.0705, 0.0785, 0.0785, 0.0985});
+        IncomeTaxPercentages.put(FamilyStatus.HOUSEHOLD_HEAD, new Double[]{0.0535, 0.0705, 0.0705, 0.0785, 0.0985});
     }
 
     private String name;
@@ -38,11 +38,14 @@ public class Taxpayer {
     private double totalTax;
     private ArrayList<Receipt> receipts;
 
-    public Taxpayer(String name, String afm, FamilyStatus familyStatus, Double income) {
-        this.name = name;
-        this.afm = afm;
-        this.familyStatus = familyStatus;
-        this.income = income;
+    public Taxpayer(final String taxpayerName,
+                    final String taxpayerAfm,
+                    final FamilyStatus taxpayerStatus,
+                    final Double taxpayerIncome) {
+        name = taxpayerName;
+        afm = taxpayerAfm;
+        familyStatus = taxpayerStatus;
+        income = taxpayerIncome;
 
         setBasicTaxBasedOnFamilyStatus();
         taxIncrease = 0;
@@ -56,34 +59,35 @@ public class Taxpayer {
         totalTax = basicTax;
     }
 
-    double calculateBaseTax(int index) {
+    double calculateBaseTax(final int index) {
         if (index == 0) {
             return 0.0;
         }
 
-        Double[] bounds = incomeBoundaries.get(familyStatus);
-        Double[] perc = incomeTaxPercentages.get(familyStatus);
+        Double[] bounds = IncomeBoundaries.get(familyStatus);
+        Double[] perc = IncomeTaxPercentages.get(familyStatus);
 
-        // ((nextBoundary - lastBoundary) * percentage) + lastBase
-        return ((bounds[index] - bounds[index - 1]) * perc[index - 1]) + calculateBaseTax(index - 1);
+        return ((bounds[index] - bounds[index - 1])
+                * perc[index - 1]) + calculateBaseTax(index - 1);
     }
 
     private double calculateTax() {
-        Double[] bounds = incomeBoundaries.get(familyStatus);
-        Double[] perc = incomeTaxPercentages.get(familyStatus);
+        Double[] bounds = IncomeBoundaries.get(familyStatus);
+        Double[] perc = IncomeTaxPercentages.get(familyStatus);
 
         for (int i = 1; i < bounds.length; ++i) {
             if (income >= bounds[i]) {
                 continue;
             }
 
-            return calculateBaseTax(i - 1) + (perc[i] * (income - bounds[i - 1]));
+            return calculateBaseTax(i - 1)
+                    + (perc[i] * (income - bounds[i - 1]));
         }
 
         return calculateBaseTax(4) + (perc[4] * (income - bounds[4]));
     }
 
-    private void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
+    private void calculateTaxVariation() {
         double totalReceiptsAmount = 0;
 
         for (Receipt receipt : receipts) {
@@ -106,7 +110,7 @@ public class Taxpayer {
         totalTax = basicTax + taxIncrease - taxDecrease;
     }
 
-    public Receipt getReceipt(int receiptID) {
+    public Receipt getReceipt(final int receiptID) {
         return receipts.get(receiptID);
     }
 
@@ -114,19 +118,17 @@ public class Taxpayer {
         return receipts;
     }
 
-    public void addReceipt(Receipt receipt) {
+    public void addReceipt(final Receipt receipt) {
         receipts.add(receipt);
-
-        calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
+        calculateTaxVariation();
     }
 
-    public void removeReceiptByIndex(int index) {
+    public void removeReceiptByIndex(final int index) {
         receipts.remove(index);
-
-        calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
+        calculateTaxVariation();
     }
 
-    public double getReceiptsTotalAmount(ReceiptKind kind) {
+    public double getReceiptsTotalAmount(final ReceiptKind kind) {
         double basicReceiptsTotalAmount = 0;
 
         for (Receipt receipt : receipts) {
@@ -135,7 +137,8 @@ public class Taxpayer {
             }
         }
 
-        return (new BigDecimal(basicReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(basicReceiptsTotalAmount)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public double getTotalReceiptsAmount() {
@@ -145,7 +148,8 @@ public class Taxpayer {
             totalReceiptsAmount += receipt.getAmount();
         }
 
-        return (new BigDecimal(totalReceiptsAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(totalReceiptsAmount)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public String getName() {
@@ -161,28 +165,32 @@ public class Taxpayer {
     }
 
     public double getIncome() {
-        return (new BigDecimal(income).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(income)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public double getBasicTax() {
-        return (new BigDecimal(basicTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(basicTax)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public double getTaxIncrease() {
-        return (new BigDecimal(taxIncrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(taxIncrease)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public double getTaxDecrease() {
-        return (new BigDecimal(taxDecrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(taxDecrease)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public double getTotalTax() {
-        return (new BigDecimal(totalTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(totalTax)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public String toString() {
-        return "Name: " + name
-                + "\nAFM: " + afm
+        return "Name: " + name + "\nAFM: " + afm
                 + "\nStatus: " + familyStatus
                 + "\nIncome: " + String.format("%.2f", income)
                 + "\nBasicTax: " + String.format("%.2f", basicTax)

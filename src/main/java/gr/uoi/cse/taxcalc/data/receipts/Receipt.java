@@ -9,12 +9,20 @@ public class Receipt {
     private double amount;
     private Company company;
 
-    public Receipt(ReceiptKind kind, String id, String date, double amount, String name, String country, String city, String street, String number) {
-        this.kind = kind;
-        this.id = id;
-        this.date = date;
-        this.amount = amount;
-        this.company = new Company(name, country, city, street, number);
+    public Receipt(final ReceiptKind receiptKind,
+                   final String receiptId,
+                   final String receiptDate,
+                   final double receiptAmount,
+                   final String name,
+                   final String country,
+                   final String city,
+                   final String street,
+                   final String number) {
+        kind = receiptKind;
+        id = receiptId;
+        date = receiptDate;
+        amount = receiptAmount;
+        company = new Company(name, country, city, street, number);
     }
 
     public String getId() {
@@ -30,7 +38,8 @@ public class Receipt {
     }
 
     public double getAmount() {
-        return (new BigDecimal(amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return (new BigDecimal(amount)
+                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
     public Company getCompany() {

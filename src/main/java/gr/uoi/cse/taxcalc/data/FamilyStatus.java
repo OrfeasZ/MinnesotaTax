@@ -6,7 +6,7 @@ public enum FamilyStatus {
     SINGLE("Single"),
     HOUSEHOLD_HEAD("Head of Household");
 
-    public static FamilyStatus getEnum(String name) {
+    public static FamilyStatus getEnum(final String name) {
         for (FamilyStatus status : values()) {
             if (status.toString().equalsIgnoreCase(name)) {
                 return status;
@@ -18,7 +18,7 @@ public enum FamilyStatus {
 
     private String displayName;
 
-    FamilyStatus(String name) {
+    FamilyStatus(final String name) {
         displayName = name;
     }
 

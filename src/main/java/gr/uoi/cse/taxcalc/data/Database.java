@@ -11,11 +11,11 @@ public class Database {
         return dataFolder;
     }
 
-    public static void setDataFolder(String folder) {
+    public static void setDataFolder(final String folder) {
         dataFolder = folder;
     }
 
-    public static void addTaxpayer(Taxpayer taxpayer) {
+    public static void addTaxpayer(final Taxpayer taxpayer) {
         taxpayers.add(taxpayer);
     }
 
@@ -27,11 +27,11 @@ public class Database {
         return taxpayers;
     }
 
-    public static Taxpayer getTaxpayerByIndex(int index) {
+    public static Taxpayer getTaxpayerByIndex(final int index) {
         return taxpayers.get(index);
     }
 
-    public static void removeTaxpayerByIndex(int index) {
+    public static void removeTaxpayerByIndex(final int index) {
         taxpayers.remove(index);
     }
 }

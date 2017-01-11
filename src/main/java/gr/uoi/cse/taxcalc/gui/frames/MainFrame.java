@@ -5,8 +5,15 @@ import gr.uoi.cse.taxcalc.gui.GUIUtils;
 import gr.uoi.cse.taxcalc.gui.dialogs.DataImportDialog;
 import gr.uoi.cse.taxcalc.gui.dialogs.TaxpayersDialog;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -52,7 +59,7 @@ public class MainFrame extends JFrame {
 
                 dataImportDialog.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(WindowEvent e) {
+                    public void windowClosed(final WindowEvent e) {
                         updateTaxpayerData();
                     }
                 });
@@ -68,7 +75,7 @@ public class MainFrame extends JFrame {
 
             taxpayersDialog.addWindowListener(new WindowAdapter() {
                 @Override
-                public void windowClosed(WindowEvent e) {
+                public void windowClosed(final WindowEvent e) {
                     updateTaxpayerData();
                 }
             });

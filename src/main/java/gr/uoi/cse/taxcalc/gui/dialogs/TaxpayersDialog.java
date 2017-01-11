@@ -16,8 +16,17 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
@@ -220,7 +229,7 @@ public class TaxpayersDialog extends JDialog {
         taxpayerList.setModel(listModel);
     }
 
-    private void showTaxpayerPieChart(Taxpayer taxpayer) {
+    private void showTaxpayerPieChart(final Taxpayer taxpayer) {
         DefaultPieDataset pieChartDataset = new DefaultPieDataset();
 
         pieChartDataset.setValue("Basic", taxpayer.getReceiptsTotalAmount(ReceiptKind.BASIC));
@@ -237,7 +246,7 @@ public class TaxpayersDialog extends JDialog {
         showChartFrame(taxpayer.getName() + " | " + taxpayer.getAFM(), pieChart);
     }
 
-    private void showTaxpayerBarChart(Taxpayer taxpayer) {
+    private void showTaxpayerBarChart(final Taxpayer taxpayer) {
         DefaultCategoryDataset barChartDataset = new DefaultCategoryDataset();
 
         String taxVariationType = taxpayer.getTaxIncrease() != 0 ? "Tax Increase" : "Tax Decrease";
@@ -251,7 +260,8 @@ public class TaxpayersDialog extends JDialog {
         showChartFrame(taxpayer.getName() + " | " + taxpayer.getAFM(), barChart);
     }
 
-    private void showChartFrame(String title, JFreeChart chart) {
+    private void showChartFrame(final String title,
+                                final JFreeChart chart) {
         ChartFrame chartFrame = new ChartFrame(title, chart);
         chartFrame.pack();
         chartFrame.setResizable(false);

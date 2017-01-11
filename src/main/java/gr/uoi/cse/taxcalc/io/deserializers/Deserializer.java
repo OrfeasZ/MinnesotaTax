@@ -7,6 +7,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 public interface Deserializer {
-    Taxpayer deserializeFile(String path) throws IOException, ParserConfigurationException, SAXException;
-    Taxpayer deserializeData(String data) throws ParserConfigurationException, IOException, SAXException;
+    Taxpayer deserializeFile(String path)
+            throws IOException, ParserConfigurationException, SAXException;
+
+    Taxpayer deserializeData(String data)
+            throws ParserConfigurationException, IOException, SAXException;
 }
