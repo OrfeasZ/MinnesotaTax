@@ -4,7 +4,7 @@ import gr.uoi.cse.taxcalc.gui.frames.MainFrame;
 
 import java.awt.EventQueue;
 
-public class Entry {
+class Entry {
     public static void main(final String[] args) {
         EventQueue.invokeLater(() -> {
             try {

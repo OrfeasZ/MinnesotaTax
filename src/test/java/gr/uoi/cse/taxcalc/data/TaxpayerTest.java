@@ -68,5 +68,4 @@ public class TaxpayerTest {
         assertEquals(5996.80, taxpayer.calculateBaseTax(3), Math.ulp(1.0));
         assertEquals(10906.19, taxpayer.calculateBaseTax(4), Math.ulp(1.0));
     }
-
 }
