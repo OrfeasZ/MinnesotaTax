@@ -1,6 +1,6 @@
 package gr.uoi.cse.taxcalc.gui.dialogs;
 
-import gr.uoi.cse.taxcalc.gui.GUIUtils;
+import gr.uoi.cse.taxcalc.util.GUIUtils;
 import gr.uoi.cse.taxcalc.io.InputSystem;
 import org.xml.sax.SAXException;
 

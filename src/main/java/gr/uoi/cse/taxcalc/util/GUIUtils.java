@@ -1,4 +1,4 @@
-package gr.uoi.cse.taxcalc.gui;
+package gr.uoi.cse.taxcalc.util;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;

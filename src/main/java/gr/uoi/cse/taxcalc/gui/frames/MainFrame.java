@@ -1,7 +1,7 @@
 package gr.uoi.cse.taxcalc.gui.frames;
 
 import gr.uoi.cse.taxcalc.data.Database;
-import gr.uoi.cse.taxcalc.gui.GUIUtils;
+import gr.uoi.cse.taxcalc.util.GUIUtils;
 import gr.uoi.cse.taxcalc.gui.dialogs.DataImportDialog;
 import gr.uoi.cse.taxcalc.gui.dialogs.TaxpayersDialog;
 

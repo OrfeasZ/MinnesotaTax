@@ -2,8 +2,8 @@ package gr.uoi.cse.taxcalc.data;
 
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
+import gr.uoi.cse.taxcalc.util.Utils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,17 +46,16 @@ public class Taxpayer {
         afm = taxpayerAfm;
         familyStatus = taxpayerStatus;
         income = taxpayerIncome;
-
-        setBasicTaxBasedOnFamilyStatus();
-        taxIncrease = 0;
-        taxDecrease = 0;
-
         receipts = new ArrayList<>();
+
+        calculateTaxes();
     }
 
-    private void setBasicTaxBasedOnFamilyStatus() {
+    private void calculateTaxes() {
         basicTax = calculateTax();
         totalTax = basicTax;
+        taxIncrease = 0;
+        taxDecrease = 0;
     }
 
     double calculateBaseTax(final int index) {
@@ -88,11 +87,7 @@ public class Taxpayer {
     }
 
     private void calculateTaxVariation() {
-        double totalReceiptsAmount = 0;
-
-        for (Receipt receipt : receipts) {
-            totalReceiptsAmount += receipt.getAmount();
-        }
+        double totalReceiptsAmount = getTotalReceiptsAmount();
 
         taxIncrease = 0;
         taxDecrease = 0;
@@ -110,7 +105,7 @@ public class Taxpayer {
         totalTax = basicTax + taxIncrease - taxDecrease;
     }
 
-    public Receipt getReceipt(final int receiptID) {
+    public Receipt getReceiptById(final int receiptID) {
         return receipts.get(receiptID);
     }
 
@@ -137,8 +132,7 @@ public class Taxpayer {
             }
         }
 
-        return (new BigDecimal(basicReceiptsTotalAmount)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(basicReceiptsTotalAmount);
     }
 
     public double getTotalReceiptsAmount() {
@@ -148,8 +142,7 @@ public class Taxpayer {
             totalReceiptsAmount += receipt.getAmount();
         }
 
-        return (new BigDecimal(totalReceiptsAmount)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(totalReceiptsAmount);
     }
 
     public String getName() {
@@ -165,28 +158,23 @@ public class Taxpayer {
     }
 
     public double getIncome() {
-        return (new BigDecimal(income)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(income);
     }
 
     public double getBasicTax() {
-        return (new BigDecimal(basicTax)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(basicTax);
     }
 
     public double getTaxIncrease() {
-        return (new BigDecimal(taxIncrease)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(taxIncrease);
     }
 
     public double getTaxDecrease() {
-        return (new BigDecimal(taxDecrease)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(taxDecrease);
     }
 
     public double getTotalTax() {
-        return (new BigDecimal(totalTax)
-                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        return Utils.roundDouble(totalTax);
     }
 
     public String toString() {

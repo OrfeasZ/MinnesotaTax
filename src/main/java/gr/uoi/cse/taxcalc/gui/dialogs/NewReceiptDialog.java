@@ -3,7 +3,7 @@ package gr.uoi.cse.taxcalc.gui.dialogs;
 import gr.uoi.cse.taxcalc.data.Taxpayer;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
 import gr.uoi.cse.taxcalc.data.receipts.ReceiptKind;
-import gr.uoi.cse.taxcalc.gui.GUIUtils;
+import gr.uoi.cse.taxcalc.util.GUIUtils;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;

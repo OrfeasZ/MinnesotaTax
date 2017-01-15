@@ -2,7 +2,7 @@ package gr.uoi.cse.taxcalc.gui.dialogs;
 
 import gr.uoi.cse.taxcalc.data.Taxpayer;
 import gr.uoi.cse.taxcalc.data.receipts.Receipt;
-import gr.uoi.cse.taxcalc.gui.GUIUtils;
+import gr.uoi.cse.taxcalc.util.GUIUtils;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -103,7 +103,7 @@ class ReceiptManagementDialog extends JDialog {
                 return;
             }
 
-            JOptionPane.showMessageDialog(null, loadedTaxpayer.getReceipt(receiptList.getSelectedIndex()).toString(), receiptList.getSelectedValue(), JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, loadedTaxpayer.getReceiptById(receiptList.getSelectedIndex()).toString(), receiptList.getSelectedValue(), JOptionPane.PLAIN_MESSAGE);
         });
     }
 
