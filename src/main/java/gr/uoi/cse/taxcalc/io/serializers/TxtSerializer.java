@@ -74,11 +74,11 @@ public class TxtSerializer extends Serializer {
         writeLine("Date: " + receipt.getDate(), writer);
         writeLine("Kind: " + receipt.getKind(), writer);
         writeLine("Amount: " + receipt.getAmount(), writer);
-        writeLine("Company: " + receipt.getCompany().getName(), writer);
-        writeLine("Country: " + receipt.getCompany().getCountry(), writer);
-        writeLine("City: " + receipt.getCompany().getCity(), writer);
-        writeLine("Street: " + receipt.getCompany().getStreet(), writer);
-        writeLine("Number: " + receipt.getCompany().getNumber(), writer);
+        writeLine("Company: " + receipt.getCompany(), writer);
+        writeLine("Country: " + receipt.getCountry(), writer);
+        writeLine("City: " + receipt.getCity(), writer);
+        writeLine("Street: " + receipt.getStreet(), writer);
+        writeLine("Number: " + receipt.getNumber(), writer);
         writeLine(writer);
     }
 

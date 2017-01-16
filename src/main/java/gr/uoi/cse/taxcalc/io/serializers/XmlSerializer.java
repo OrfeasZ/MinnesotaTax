@@ -76,11 +76,11 @@ public class XmlSerializer extends Serializer {
         writeLine("<Date> " + receipt.getDate() + " </Date>", writer);
         writeLine("<Kind> " + receipt.getKind() + " </Kind>", writer);
         writeLine("<Amount> " + receipt.getAmount() + " </Amount>", writer);
-        writeLine("<Company> " + receipt.getCompany().getName() + " </Company>", writer);
-        writeLine("<Country> " + receipt.getCompany().getCountry() + " </Country>", writer);
-        writeLine("<City> " + receipt.getCompany().getCity() + " </City>", writer);
-        writeLine("<Street> " + receipt.getCompany().getStreet() + " </Street>", writer);
-        writeLine("<Number> " + receipt.getCompany().getNumber() + " </Number>", writer);
+        writeLine("<Company> " + receipt.getCompany() + " </Company>", writer);
+        writeLine("<Country> " + receipt.getCountry() + " </Country>", writer);
+        writeLine("<City> " + receipt.getCity() + " </City>", writer);
+        writeLine("<Street> " + receipt.getStreet() + " </Street>", writer);
+        writeLine("<Number> " + receipt.getNumber() + " </Number>", writer);
         writeLine(writer);
     }
 
